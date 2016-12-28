@@ -742,6 +742,8 @@
 							
 							if (z_msg.length > 0) {
 								z_msg='已收款：'+FormatNumber(t_tpaysale)+'，收款單號【'+z_msg.substr(0,z_msg.length-1)+ '】。 '
+							}else{
+								z_msg='未收款。'
 							}
 						}else{
 							z_msg='未收款。'
