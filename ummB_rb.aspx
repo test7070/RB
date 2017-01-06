@@ -377,7 +377,7 @@
                 check_umms=false;
                 
                 //判斷bbs與bbt的內容數量是否相等
-                var bbss=[];
+                var bbss=[],bbslen=0;
                 var bbtt=[];
                 for (var i = 0; i < q_bbsCount; i++) {
                 	var t_productno=$('#txtProductno_'+i).val();
@@ -402,7 +402,8 @@
 		                			mount:t_mount
 		                		});
 	                		}
-	                	}	
+	                	}
+	                	bbslen++;
                 	}
                 }
                 
@@ -435,7 +436,9 @@
                 	for (var j = 0; j < bbtt.length; j++) {
                 		if(bbss[i].productno==bbtt[j].productno && bbss[i].mount==bbtt[j].mount){
                 			bbss.splice(i, 1);
+                			bbtt.splice(j, 1);
                 			i--;
+                			j--;
                 			break;
                 		}
                 	}	
@@ -444,7 +447,17 @@
                 if(bbss.length>0){
                 	var t_tmpproduct="";
                 	for(var n=0;n<bbss.length;n++){
-                		t_tmpproduct=t_tmpproduct+(t_tmpproduct.length>0?',':'')+bbss[0].productno;
+                		t_tmpproduct=t_tmpproduct+(t_tmpproduct.length>0?',':'')+bbss[n].productno;
+                	}
+                	
+                	alert("產品編號 "+t_tmpproduct+" 表身(藍色區塊)與表尾(紅色區塊)產品數量不符!!");
+                	return;
+                }
+                
+                if(bbslen>0 && bbtt.length>0){
+                	var t_tmpproduct="";
+                	for(var n=0;n<bbtt.length;n++){
+                		t_tmpproduct=t_tmpproduct+(t_tmpproduct.length>0?',':'')+bbtt[n].productno;
                 	}
                 	
                 	alert("產品編號 "+t_tmpproduct+" 表身(藍色區塊)與表尾(紅色區塊)產品數量不符!!");
