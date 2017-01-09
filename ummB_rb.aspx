@@ -411,24 +411,26 @@
                 	var t_productno=$('#txtProductno__'+i).val();
                 	var t_mount=dec($('#txtMount__'+i).val());
                 	var t_find=false;
-                	if(bbtt==undefined){
-                		bbtt.push({
-                			productno:t_productno,
-                			mount:t_mount
-                		});
-                	}else{
-                		for (var j = 0; j < bbtt.length; j++) {
-                			if(bbtt[j].productno==t_productno){
-                				bbtt[j].mount=q_add(bbtt[j].mount,t_mount)
-                				t_find=true;
-                			}
-                		}
-                		if(!t_find){
-                			bbtt.push({
+                	if(t_productno.length>0){
+	                	if(bbtt==undefined){
+	                		bbtt.push({
 	                			productno:t_productno,
 	                			mount:t_mount
 	                		});
-                		}
+	                	}else{
+	                		for (var j = 0; j < bbtt.length; j++) {
+	                			if(bbtt[j].productno==t_productno){
+	                				bbtt[j].mount=q_add(bbtt[j].mount,t_mount)
+	                				t_find=true;
+	                			}
+	                		}
+	                		if(!t_find){
+	                			bbtt.push({
+		                			productno:t_productno,
+		                			mount:t_mount
+		                		});
+	                		}
+	                	}
                 	}
                 }
                 	
