@@ -88,7 +88,7 @@
 
             currentData.prototype = {
                 data : [],
-                exclude : ['txtNoa', 'txtDatea', 'txtOrdeno', 'txtNo2', 'txtWorker', 'txtWorker2'], //bbm
+                exclude : ['txtNoa', 'txtDatea', 'txtOrdeno', 'txtNo2', 'txtWorker', 'txtWorker2','txtVcceno'], //bbm
                 excludes : [''], //bbs
                 excludet : [''], //bbt
                 copy : function() {
