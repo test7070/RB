@@ -109,7 +109,7 @@
 				$('#lblStore').text('倉庫');
 				$('#lblSerial').text('統一編號');
 
-				var t_where = "where=^^ 1=0 ^^";
+				var t_where = "where=^^ 1=0 ^^ stop=100";
 				q_gt('custaddr', t_where, 0, 0, 0, "");
 				
 				$('#btnPlusCust').click(function(){
@@ -245,7 +245,7 @@
 
 				$('#txtCustno').change(function() {
 					if (!emp($('#txtCustno').val())) {
-						var t_where = "where=^^ noa='" + $('#txtCustno').val() + "' ^^";
+						var t_where = "where=^^ noa='" + $('#txtCustno').val() + "' ^^ stop=100";
 						q_gt('custaddr', t_where, 0, 0, 0, "");
 					}
 				});
@@ -711,7 +711,7 @@
 						Unlock(1);
 						$('#txtOdate').focus();
 						if (!emp($('#txtCustno').val())) {
-							var t_where = "where=^^ noa='" + $('#txtCustno').val() + "'  ^^";
+							var t_where = "where=^^ noa='" + $('#txtCustno').val() + "'  ^^ stop=100";
 							q_gt('custaddr', t_where, 0, 0, 0, "");
 						}
 						break;
@@ -1139,7 +1139,7 @@
 				$('#txtPaytype').val('劃撥'); //1050222
 				
 				if (!emp($('#txtCustno').val())) {
-					var t_where = "where=^^ noa='" + $('#txtCustno').val() + "' ^^";
+					var t_where = "where=^^ noa='" + $('#txtCustno').val() + "' ^^ stop=100";
 					q_gt('custaddr', t_where, 0, 0, 0, "");
 				}
 				
@@ -1196,7 +1196,7 @@
 					Unlock(1);
 					$('#txtOdate').focus();
 					if (!emp($('#txtCustno').val())) {
-						var t_where = "where=^^ noa='" + $('#txtCustno').val() + "'  ^^";
+						var t_where = "where=^^ noa='" + $('#txtCustno').val() + "'  ^^ stop=100";
 						q_gt('custaddr', t_where, 0, 0, 0, "");
 					}
 				}
@@ -1375,7 +1375,7 @@
 				switch (s1) {
 					case 'txtCustno':
 						if (!emp($('#txtCustno').val())) {
-							var t_where = "where=^^ noa='" + $('#txtCustno').val() + "' ^^";
+							var t_where = "where=^^ noa='" + $('#txtCustno').val() + "' ^^ stop=100";
 							q_gt('custaddr', t_where, 0, 0, 0, "");
 						}
 						break;
