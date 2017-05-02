@@ -121,8 +121,10 @@
                         if (q_cur > 0 && q_cur < 4) {
                             b_ret = getb_ret();
                             ///  q_box() 執行後，選取的資料
-                            if (!b_ret || b_ret.length == 0)
+                            if (!b_ret || b_ret.length == 0){
+                            	b_pop = '';
                                 return;
+							}
                             //清空bbs 1050613 要可以重覆匯入
                             /*for (var i = 0; i < q_bbsCount; i++) {
                                 $('#btnMinus_' + i).click();
@@ -137,8 +139,10 @@
                         if (q_cur > 0 && q_cur < 4) {
                             b_ret = getb_ret();
                             ///  q_box() 執行後，選取的資料
-                            if (!b_ret || b_ret.length == 0)
+                            if (!b_ret || b_ret.length == 0){
+                            	b_pop = '';
                                 return;
+							}
 							var t_noa = '';
                             for (var i = 0; i < b_ret.length; i++) {
                                 if (t_noa.length > 0) {
@@ -164,8 +168,10 @@
                         if (q_cur > 0 && q_cur < 4) {
                             b_ret = getb_ret();
                             ///  q_box() 執行後，選取的資料
-                            if (!b_ret || b_ret.length == 0)
+                            if (!b_ret || b_ret.length == 0){
+                            	b_pop = '';
                                 return;
+							}
                             var t_noa = '';
                             for (var i = 0; i < b_ret.length; i++) {
                                 if (t_noa.length > 0) {
