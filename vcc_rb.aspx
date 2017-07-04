@@ -14,7 +14,8 @@
 			function onPageError(error) {
 				alert("An error occurred:\r\n" + error.Message);
 			}
- 			q_copy=1;
+ 			//q_copy=1;
+ 			//106/07/04 出貨單不提供複製 避免訂單重複扣
 			q_tables = 's';
 			var q_name = "vcc";
 			var q_readonly = ['txtNoa', 'txtAccno', 'txtComp','txtCardeal','txtSales', 'txtAcomp', 'txtMoney', 'txtTax', 'txtTotal', 'txtWorker', 'txtWorker2','txtTranstart','txtPart','txtStore','txtOrdeno','txtAcc2','textStatus'];
