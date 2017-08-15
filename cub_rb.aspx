@@ -409,6 +409,11 @@
                 if ($('#checkCopy').is(':checked'))
                     curData.paste();
                 $('#txtNoa').val('AUTO');
+                $('#txtVcceno').val(''); //106/08/15 加強清除
+                $('#txtOrdeno').val('');
+                $('#txtNo2').val('');
+                $('#txtWorker').val('');
+                $('#txtWorker2').val('');
                 $('#txtDatea').val(q_date());
                 $('#txtDatea').focus();
                 $('#txtStoreno').val('001');
