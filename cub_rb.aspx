@@ -246,6 +246,9 @@
                             q_func('ina_post.post', as[i].accy + ',' + as[i].noa + ',0');
                             sleep(100);
                         }
+                        if(as.length<6){ //106/08/25 筆數少時多等一秒 避免後端提前被刪除
+                        	sleep(1000);
+                        }
                         //執行txt
                         q_func('qtxt.query.cubs2rc2_rb_0', 'cub.txt,cubs2rc2_rb,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val()) + ';0;' + encodeURI(q_getPara('sys.key_rc2')) + ';' + encodeURI(q_getPara('sys.key_ina')) + ';' + encodeURI($('#txtStoreno').val()));
                         break;
@@ -262,6 +265,9 @@
                         for (var i = 0; i < as.length; i++) {
                             q_func('ina_post.post', as[i].accy + ',' + as[i].noa + ',0');
                             sleep(100);
+                        }
+                        if(as.length<6){ //106/08/25 筆數少時多等一秒 避免後端提前被刪除
+                        	sleep(1000);
                         }
                         //執行txt
                         q_func('qtxt.query.cubs2rc2_rb_3', 'cub.txt,cubs2rc2_rb,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val()) + ';0;' + encodeURI(q_getPara('sys.key_rc2')) + ';' + encodeURI(q_getPara('sys.key_ina')) + ';' + encodeURI($('#txtStoreno').val()));
