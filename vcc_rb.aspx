@@ -893,7 +893,7 @@
 				
 				//106/09/15檢查出貨數量是否大於訂單數量 避免重複匯入同樣2次出貨單
 				t_err='';
-				if(q_cur==1){
+				if(q_cur==1 && $('#cmbTypea').val()=='1'){
 					var tw_ordeno='1=0';
 					for (var i = 0; i < q_bbsCount; i++) {
 						if(!emp($('#txtOrdeno_'+i).val())){
