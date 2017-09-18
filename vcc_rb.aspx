@@ -891,6 +891,40 @@
 				check_vcca=false;
 				check_stkucc=false;
 				
+				//106/09/15檢查出貨數量是否大於訂單數量 避免重複匯入同樣2次出貨單
+				t_err='';
+				if(q_cur==1){
+					var tw_ordeno='1=0';
+					for (var i = 0; i < q_bbsCount; i++) {
+						if(!emp($('#txtOrdeno_'+i).val())){
+							tw_ordeno+=" or (noa='"+$('#txtOrdeno_'+i).val()+"' and no2='"+$('#txtNo2_'+i).val()+"')";
+						}
+					}
+					
+					var t_where = "where=^^ "+tw_ordeno+" ^^";
+					q_gt('view_ordes', t_where, 0, 0, 0, "getordes", r_accy,1);
+					var ordesas = _q_appendData("view_ordes", "", true);
+					
+					for (var i = 0; i < q_bbsCount; i++) {
+						if(!emp($('#txtOrdeno_'+i).val())){
+							for(var j=0; j<ordesas.length; j++){
+								if($('#txtOrdeno_'+i).val()==ordesas[j].noa && $('#txtNo2_'+i).val()==ordesas[j].no2){
+									if(dec(ordesas[j].vmount)+dec($('#txtMount_'+i).val())>dec(ordesas[j].mount)){
+										t_err+=$('#txtProduct_'+i).val()+'出貨總數量(含已出貨)已超出訂單量!!\n';
+									}
+									break;
+								}
+							}
+						}
+					}
+					
+				}
+				
+				if (t_err.length > 0) {
+					alert(t_err);
+					return;
+				}
+				
 				for (var i = 0; i < q_bbsCount; i++) {
 					if(!emp($('#txtProductno_'+i).val())){
 						$('#txtStoreno_'+i).val($('#txtStoreno').val());
