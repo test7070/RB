@@ -171,14 +171,20 @@
 			}
 
 			function btnOk() {
-				t_err = q_chkEmpField([['txtNoa', q_getMsg('lblNoa')], ['txtDatea', q_getMsg('lblDatea')]]);
+				t_err = q_chkEmpField([['txtNoa', q_getMsg('lblNoa')], ['txtDatea', q_getMsg('lblDatea')],['txtStoreno', q_getMsg('lblStore')],['txtStoreinno', q_getMsg('lblStorein')]]);
 				if (t_err.length > 0) {
 					alert(t_err);
 					return;
 				}
 				
+				if($('#txtStoreno').val()==$('#txtStoreinno').val()){
+					alert(q_getMsg('lblStore')+'與'+q_getMsg('lblStorein')+'相同!!');
+					return;
+				}
+				
+				//106/10/03 0109 全部都一定都要打倉庫 倉庫不能一樣
 				if($('#cmbTypea').val()=='4' || $('#cmbTypea').val()=='5'){
-					t_err = q_chkEmpField([['txtCustno', q_getMsg('lblCust')],['txtStoreno', q_getMsg('lblStore')],['txtStoreinno', q_getMsg('lblStorein')]]);
+					t_err = q_chkEmpField([['txtCustno', q_getMsg('lblCust')]]);
 					if (t_err.length > 0) {
 						alert(t_err);
 						return;
