@@ -253,6 +253,9 @@ select '0',isnull(c.partno,''),isnull(c.part,''),a.noa,isnull(c.namea,'員工主
 from labase a left join salinsures b on a.noa=b.noa
 left join sss c on a.noa=c.noa
 where b.mon=@t_xmon
+and (isnull(b.la_person,0)!=0 or isnull(b.he_person,0)!=0 
+or isnull(b.re_person,0)!=0 or isnull(b.la_comp,0)!=0 or isnull(b.disaster,0)!=0
+or isnull(b.he_comp,0)!=0 or isnull(b.re_comp,0)!=0)
 group by c.partno,c.part,a.noa,c.namea
 
 insert @tmp (gno,partno,parts,insur_fund)
