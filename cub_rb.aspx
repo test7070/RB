@@ -222,7 +222,7 @@
                             q_func('rc2_post.post', as[i].accy + ',' + as[i].noa + ',0');
                             sleep(100);
                         }
-                        q_gt('view_ina', "where=^^product='" + $('#txtNoa').val() + "'^^", 0, 0, 0, "stpost_ina_0");
+                        q_gt('view_ina', "where=^^product='" + t_stnoa + "'^^", 0, 0, 0, "stpost_ina_0");
                         break;
                     case 'stpost_rc2_1':
                         var as = _q_appendData("view_rc2", "", true);
@@ -230,7 +230,7 @@
                             q_func('rc2_post.post', as[i].accy + ',' + as[i].noa + ',1');
                             sleep(100);
                         }
-                        q_gt('view_ina', "where=^^product='" + $('#txtNoa').val() + "'^^", 0, 0, 0, "stpost_ina_1");
+                        q_gt('view_ina', "where=^^product='" + t_stnoa + "'^^", 0, 0, 0, "stpost_ina_1");
                         break;
                     case 'stpost_rc2_3':
                         var as = _q_appendData("view_rc2", "", true);
@@ -238,7 +238,7 @@
                             q_func('rc2_post.post', as[i].accy + ',' + as[i].noa + ',0');
                             sleep(100);
                         }
-                        q_gt('view_ina', "where=^^product='" + $('#txtNoa').val() + "'^^", 0, 0, 0, "stpost_ina_3");
+                        q_gt('view_ina', "where=^^product='" + t_stnoa + "'^^", 0, 0, 0, "stpost_ina_3");
                         break;
                     case 'stpost_ina_0':
                         var as = _q_appendData("view_ina", "", true);
@@ -250,7 +250,7 @@
                         	sleep(1000);
                         }
                         //執行txt
-                        q_func('qtxt.query.cubs2rc2_rb_0', 'cub.txt,cubs2rc2_rb,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val()) + ';0;' + encodeURI(q_getPara('sys.key_rc2')) + ';' + encodeURI(q_getPara('sys.key_ina')) + ';' + encodeURI($('#txtStoreno').val()));
+                        q_func('qtxt.query.cubs2rc2_rb_0', 'cub.txt,cubs2rc2_rb,' + encodeURI(r_accy) + ';' + encodeURI(t_stnoa) + ';0;' + encodeURI(q_getPara('sys.key_rc2')) + ';' + encodeURI(q_getPara('sys.key_ina')) + ';' + encodeURI(t_ststoreno));
                         break;
                     case 'stpost_ina_1':
                         var as = _q_appendData("view_ina", "", true);
@@ -258,7 +258,7 @@
                             q_func('ina_post.post', as[i].accy + ',' + as[i].noa + ',1');
                             sleep(100);
                         }
-                        Unlock(1);
+                        Unlock();
                         break;
                     case 'stpost_ina_3':
                         var as = _q_appendData("view_ina", "", true);
@@ -270,7 +270,7 @@
                         	sleep(1000);
                         }
                         //執行txt
-                        q_func('qtxt.query.cubs2rc2_rb_3', 'cub.txt,cubs2rc2_rb,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val()) + ';0;' + encodeURI(q_getPara('sys.key_rc2')) + ';' + encodeURI(q_getPara('sys.key_ina')) + ';' + encodeURI($('#txtStoreno').val()));
+                        q_func('qtxt.query.cubs2rc2_rb_3', 'cub.txt,cubs2rc2_rb,' + encodeURI(r_accy) + ';' + encodeURI(t_stnoa) + ';0;' + encodeURI(q_getPara('sys.key_rc2')) + ';' + encodeURI(q_getPara('sys.key_ina')) + ';' + encodeURI(t_ststoreno));
                         break;
                     case 'getinano':
                         var as = _q_appendData("view_cub", "", true);
@@ -330,32 +330,53 @@
                         break;
                 }
             }
-
+			
+			var t_stnoa='';
+			var t_ststoreno='';
+			
             function q_stPost() {
                 if (!(q_cur == 1 || q_cur == 2))
                     return false;
 
                 if (!emp($('#txtNoa').val())) {
-                    Lock(1, {
-                        opacity : 0
-                    });
-                    q_gt('view_rc2', "where=^^postname='" + $('#txtNoa').val() + "'^^", 0, 0, 0, "stpost_rc2_0");
+                    Lock();
+                    t_stnoa=$('#txtNoa').val();
+					t_ststoreno=$('#txtStoreno').val();
+                    
+                    q_gt('view_rc2', "where=^^postname='" + t_stnoa + "'^^", 0, 0, 0, "stpost_rc2_0");
                 }
             }
 
             function q_funcPost(t_func, result) {
                 switch(t_func) {
                     case 'qtxt.query.cubs2rc2_rb_0':
-                        q_func('qtxt.query.cubs2rc2_rb_1', 'cub.txt,cubs2rc2_rb,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val()) + ';1;' + encodeURI(q_getPara('sys.key_rc2')) + ';' + encodeURI(q_getPara('sys.key_ina')) + ';' + encodeURI($('#txtStoreno').val()));
+                    	var as = _q_appendData("tmp0", "", true, true);
+                		if (as[0] != undefined) {
+                			t_stnoa=as[0].noa;
+                			t_ststoreno=as[0].storeno;
+                		}
+                		sleep(100);
+                        q_func('qtxt.query.cubs2rc2_rb_1', 'cub.txt,cubs2rc2_rb,' + encodeURI(r_accy) + ';' + encodeURI(t_stnoa) + ';1;' + encodeURI(q_getPara('sys.key_rc2')) + ';' + encodeURI(q_getPara('sys.key_ina')) + ';' + encodeURI(t_ststoreno));
                         break;
                     case 'qtxt.query.cubs2rc2_rb_1':
-                        q_gt('view_rc2', "where=^^postname='" + $('#txtNoa').val() + "'^^", 0, 0, 0, "stpost_rc2_1");
+                    	var as = _q_appendData("tmp0", "", true, true);
+                		if (as[0] != undefined) {
+                			t_stnoa=as[0].noa;
+                			t_ststoreno=as[0].storeno;
+                		}
+                		sleep(100);
+                        q_gt('view_rc2', "where=^^postname='" + t_stnoa + "'^^", 0, 0, 0, "stpost_rc2_1");
                         //回寫到bbs 與 bbm
-                        q_gt('view_cub', "where=^^noa='" + $('#txtNoa').val() + "'^^", 0, 0, 0, "getinano");
-                        q_gt('view_cubs', "where=^^noa='" + $('#txtNoa').val() + "'^^", 0, 0, 0, "getrc2no");
+                        q_gt('view_cub', "where=^^noa='" + t_stnoa + "'^^", 0, 0, 0, "getinano");
+                        q_gt('view_cubs', "where=^^noa='" + t_stnoa + "'^^", 0, 0, 0, "getrc2no");
                         break;
                     case 'qtxt.query.cubs2rc2_rb_3':
-                        _btnOk($('#txtNoa').val(), bbmKey[0], ( bbsHtm ? bbsKey[1] : ''), '', 3)
+                    	var as = _q_appendData("tmp0", "", true, true);
+                		if (as[0] != undefined) {
+                			t_stnoa=as[0].noa;
+                			t_ststoreno=as[0].storeno;
+                		}
+                        _btnOk(t_stnoa, bbmKey[0], ( bbsHtm ? bbsKey[1] : ''), '', 3)
                         break;
                 }
             }
@@ -659,8 +680,11 @@
                 if (!confirm(mess_dele))
                     return;
                 q_cur = 3;
+                
+                t_stnoa=$('#txtNoa').val();
+				t_ststoreno=$('#txtStoreno').val();
 
-                q_gt('view_rc2', "where=^^postname='" + $('#txtNoa').val() + "'^^", 0, 0, 0, "stpost_rc2_3");
+                q_gt('view_rc2', "where=^^postname='" + t_stnoa + "'^^", 0, 0, 0, "stpost_rc2_3");
             }
 
             function btnCancel() {
