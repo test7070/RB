@@ -275,15 +275,19 @@
                     case 'getinano':
                         var as = _q_appendData("view_cub", "", true);
                         if (as[0] != undefined) {
-                            $('#txtVcceno').val(as[0].vcceno)
-                            abbm[q_recno]['vcceno'] = as[0].vcceno;
+							if(as[0].noa==$('#txtNoa').val()){
+	                            $('#txtVcceno').val(as[0].vcceno)
+							}
+							if(as[0].noa==abbm[q_recno]['noa']){
+	                            abbm[q_recno]['vcceno'] = as[0].vcceno;
+							}
                         }
                         break;
                     case 'getrc2no':
                         var as = _q_appendData("view_cubs", "", true);
                         for (var i = 0; i < as.length; i++) {
                             for (var j = 0; j < q_bbsCount; j++) {
-                                if (as[i].noq == $('#txtNoq_' + j).val()) {
+                                if (as[i].noa==$('#txtNoa').val() && as[i].noq == $('#txtNoq_' + j).val()) {
                                     $('#txtOrdeno_' + j).val(as[i].ordeno);
                                     break;
                                 }
@@ -468,6 +472,11 @@
                 if ($('#txtDatea').val().length == 0 || !q_cd($('#txtDatea').val())) {
                     alert(q_getMsg('lblDatea') + '錯誤。');
                     return;
+                }
+                
+                if (q_cur == 1){
+                	//強制清空 PC效能回應太慢造成單號重複問題
+                	$('#txtVcceno').val('');
                 }
 
                 if (q_cur == 1)
