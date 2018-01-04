@@ -219,7 +219,7 @@
                     case 'stpost_rc2_0':
                         var as = _q_appendData("view_rc2", "", true);
                         for (var i = 0; i < as.length; i++) {
-                            q_func('rc2_post.post', as[i].accy + ',' + as[i].noa + ',0');
+                            q_func('rc2_post.post', as[i].datea.substr(0,r_len) + ',' + as[i].noa + ',0');
                             sleep(100);
                         }
                         q_gt('view_ina', "where=^^product='" + t_stnoa + "'^^", 0, 0, 0, "stpost_ina_0");
@@ -227,7 +227,7 @@
                     case 'stpost_rc2_1':
                         var as = _q_appendData("view_rc2", "", true);
                         for (var i = 0; i < as.length; i++) {
-                            q_func('rc2_post.post', as[i].accy + ',' + as[i].noa + ',1');
+                            q_func('rc2_post.post', as[i].datea.substr(0,r_len) + ',' + as[i].noa + ',1');
                             sleep(100);
                         }
                         q_gt('view_ina', "where=^^product='" + t_stnoa + "'^^", 0, 0, 0, "stpost_ina_1");
@@ -235,7 +235,7 @@
                     case 'stpost_rc2_3':
                         var as = _q_appendData("view_rc2", "", true);
                         for (var i = 0; i < as.length; i++) {
-                            q_func('rc2_post.post', as[i].accy + ',' + as[i].noa + ',0');
+                            q_func('rc2_post.post', as[i].datea.substr(0,r_len) + ',' + as[i].noa + ',0');
                             sleep(100);
                         }
                         q_gt('view_ina', "where=^^product='" + t_stnoa + "'^^", 0, 0, 0, "stpost_ina_3");
