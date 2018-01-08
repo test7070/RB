@@ -1286,7 +1286,7 @@
 					opacity : 0
 				});
 				
-				if(!emp($('#txtAccno').val())){
+				if(!emp($('#txtAccno').val()) && r_rank<9){
 					alert('已轉傳票禁止刪除!!');
 					Unlock(1);
 					return;
