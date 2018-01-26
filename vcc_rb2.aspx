@@ -1121,9 +1121,7 @@
 		<div class='dbbs' style="width: 1400px;">
 			<table id="tbbs" class='tbbs'>
 				<tr style='color:White; background:#003366;' >
-					<td align="center" style="width:40px;">
-						<input class="btn"  id="btnPlus" type="button" value='＋' style="font-weight: bold;width:" />
-					</td>
+					<td align="center" style="width:40px;"><input class="btn"  id="btnPlus" type="button" value='＋' style="font-weight: bold;width:" /></td>
 					<td align="center" style="width:180px" id='xbProductno'><a id='lblProductno_s'> </a></td>
 					<td align="center" style="width:180px;" id='xbProduct'><a id='lblProduct_s'> </a></td>
 					<td align="center" style="width:95px;" class="isStyle"><a id='lblStyle_s'> </a></td>
@@ -1138,9 +1136,7 @@
 					<td align="center" style="width:40px;"><a id='lblStk_s'> </a></td>
 				</tr>
 				<tr style='background:#cad3ff;'>
-					<td>
-						<input class="btn"  id="btnMinus.*" type="button" value='－' style=" font-weight: bold;" />
-					</td>
+					<td><input class="btn"  id="btnMinus.*" type="button" value='－' style=" font-weight: bold;" /></td>
 					<td align="center">
 						<input class="txt c1"  id="txtProductno.*" type="text" />
 						<input id="txtNoq.*" type="text" class="txt c6"/>
