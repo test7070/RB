@@ -16,7 +16,7 @@
 			}
 			q_tables = 's';
 			var q_name = "vcc";
-			var q_readonly = ['txtNoa','txtComp', 'txtMoney', 'txtTotal', 'txtWorker', 'txtWorker2'];
+			var q_readonly = ['txtNoa','txtComp','txtnick', 'txtMoney', 'txtTotal', 'txtWorker', 'txtWorker2'];
 			var q_readonlys = ['txtTotal', 'txtOrdeno', 'txtNo2','txtNoq'];
 			var bbmNum = [ ['txtPrice', 10, 3, 1],['txtMoney', 15, 0, 1], ['txtTax', 15, 0, 1],['txtTotal', 15, 0, 1],['txtTranmoney', 15, 0, 1]];
 			var bbsNum = [];
@@ -30,8 +30,9 @@
 			brwKey = 'datea';
 
 			aPop = new Array(
-				['txtCustno', 'lblCust', 'cust', 'noa,nick,tel', 'txtCustno,txtComp,txtTel', 'cust_b.aspx'],
+				['txtCustno', 'lblCust', 'cust', 'noa,comp,nick,tel', 'txtCustno,txtComp,txtnick,txtTel', 'cust_b.aspx'],
 				['txtCustno2', 'lblCust2', 'cust', 'noa,comp', 'txtCustno2,txtComp2', 'cust_b.aspx'],
+                ['txtCno', 'lblAcomp', 'acomp', 'noa,acomp', 'txtCno,txtAcomp', 'acomp_b.aspx'],
 				['txtPost', 'lblAddr', 'addr2', 'noa,post', 'txtPost', 'addr2_b.aspx'],
 				['txtPost2', 'lblAddr2', 'addr2', 'noa,post', 'txtPost2', 'addr2_b.aspx'],
 				['txtProductno_', 'btnProductno_', 'ucaucc', 'noa,product,unit,spec', 'txtProductno_,txtProduct_,txtUnit_,txtSpec_', 'ucaucc_b.aspx'],
@@ -95,7 +96,7 @@
 				bbmMask = [['txtDatea', r_picd], ['txtMon', r_picm]];
 				if (q_getPara('sys.project').toUpperCase()=='KDC'){
 				    aPop = new Array(
-                        ['txtCustno', 'lblCust', 'cust', 'noa,nick,tel','txtCustno,txtComp,txtTel', 'cust_b.aspx'],
+                        ['txtCustno', 'lblCust', 'cust', 'noa,comp,nick,tel','txtCustno,txtComp,txtnick,txtTel', 'cust_b.aspx'],
                         ['txtCustno2', 'lblCust2', 'cust', 'noa,comp', 'txtCustno2,txtComp2', 'cust_b.aspx'],
                         ['txtPost', 'lblAddr', 'addr2', 'noa,post', 'txtPost', 'addr2_b.aspx'],
                         ['txtPost2', 'lblAddr2', 'addr2', 'noa,post', 'txtPost2', 'addr2_b.aspx'],
@@ -561,7 +562,7 @@
 			
 			var check_startdate=false;
 			function btnOk() {
-				var t_err = q_chkEmpField([['txtNoa', q_getMsg('lblNoa')],['txtDatea', q_getMsg('lblDatea')], ['txtCustno', q_getMsg('lblCust')], ['txtCno', q_getMsg('lblAcomp')]]);
+				var t_err = q_chkEmpField([['txtNoa', q_getMsg('lblNoa')],['txtDatea', q_getMsg('lblDatea')], ['txtCustno', q_getMsg('lblCust')],['txtCno', q_getMsg('lblAcomp')], ['txtCno', q_getMsg('lblAcomp')]]);
 				if (t_err.length > 0) {
 					alert(t_err);
 					return;
@@ -716,6 +717,8 @@
 				$('#txtDatea').val(q_date());
 				$('#cmbTypea').val('1');
 				$('#txtDatea').focus();
+				$('#txtCno').val(z_cno);
+                $('#txtAcomp').val(z_acomp);
 				var t_where = "where=^^ 1=0 ^^ stop=100";
 				q_gt('custaddr', t_where, 0, 0, 0, "");
 			}
@@ -1047,9 +1050,9 @@
 				</table>
 			</div>
 			<div class='dbbm'>
-				<table class="tbbm" id="tbbm" >
+				<table class="tbbm" id="tbbm" border="1">
 					<tr>
-						<td>
+						<td width="70%">
 							<table>
 								<tr style="height: 1px;">
 									<td class="td1" style="width: 108px;"> </td>
@@ -1073,10 +1076,16 @@
 									</td>
 								</tr>
 								<tr>
+								    <td class="td1"><span> </span><a id="lblAcomp" class="lbl btn"> </a></td>
+                                    <td class="td2"><input id="txtCno" type="text" class="txt c1"/></td>
+                                    <td class="td2" colspan="4"><input id="txtAcomp" type="text" class="txt c1"/></td>
+								</tr>
+								<tr>
 									<td class="td1"><span> </span><a id="lblCust" class="lbl btn"> </a></td>
 									<td class="td2"><input id="txtCustno" type="text" class="txt c1"/></td>
-									<td class="td2"><input id="txtComp" type="text" class="txt c1"/></td>
-									<td class="td7" colspan='2'><input id="txtTel" type="text" class="txt c1"/></td>
+									<td class="td2" colspan="2"><input id="txtComp" type="text" class="txt c1" size="20%"/></td>
+									<td class="td3"><input id="txtnick" type="text" class="txt c1"/></td>
+									<td class="td3" colspan="2"><input id="txtTel" type="text" class="txt c1" size="20%"/></td>
 								</tr>
 								<tr>
 									<td class="td1"><span> </span><a id="lblWorker" class="lbl"> </a></td>
@@ -1091,7 +1100,7 @@
 								</tr>
 							</table>
 						</td>
-						<td>
+						<td width="30%">
 							<table>
 								<tr>
 									<td class="td1"><span> </span><a id="lblTranmoney" class="lbl"> </a></td>
