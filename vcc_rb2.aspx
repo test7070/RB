@@ -1085,7 +1085,7 @@
 									<td class="td2"><input id="txtCustno" type="text" class="txt c1"/></td>
 									<td class="td2" colspan="2"><input id="txtComp" type="text" class="txt c1" size="20%"/></td>
 									<td class="td3"><input id="txtnick" type="text" class="txt c1"/></td>
-									<td class="td3" colspan="2"><input id="txtTel" type="text" class="txt c1" size="20%"/></td>
+									<td class="td3" colspan="3"><input id="txtTel" type="text" class="txt c1" size="20%"/></td>
 								</tr>
 								<tr>
 									<td class="td1"><span> </span><a id="lblWorker" class="lbl"> </a></td>
@@ -1104,22 +1104,22 @@
 							<table>
 								<tr>
 									<td class="td1"><span> </span><a id="lblTranmoney" class="lbl"> </a></td>
-									<td class="td2" colspan='2'><input id="txtTranmoney" type="text" class="txt num c1"/></td>
+									<td class="" colspan='2'><input id="txtTranmoney" type="text" class="txt num c1"/></td>
 								</tr>
 								<tr>
 									<td class="td1"><span> </span><a id="lblMoney" class="lbl"> </a></td>
-									<td class="td2" colspan='2'><input id="txtMoney" type="text" class="txt num c1"/></td>
+									<td class="" colspan='2'><input id="txtMoney" type="text" class="txt num c1"/></td>
 								</tr>
 								<tr>
-									<td class="td4"><span> </span><a id='lblTax' class="lbl"> </a></td>
-									<td class="td5" colspan='2'>
+									<td class="td1"><span> </span><a id='lblTax' class="lbl"> </a></td>
+									<td class="" colspan='2'>
 										<input id="txtTax" type="text" class="txt num c1 istax"  style="width: 49%;"/>
 										<input id="chkAtax" type="checkbox" />
 									</td>
 								</tr>
 								<tr>
 									<td class="td7"><span> </span><a id='lblTotal' class="lbl istax"> </a></td>
-									<td class="td8"><input id="txtTotal" type="text" class="txt num c1 istax"/></td>
+									<td class=""><input id="txtTotal" type="text" class="txt num c1 istax"/></td>
 								</tr>
 							</table>
 						</td>
@@ -1174,9 +1174,7 @@
 						<input id="txtOrdeno.*" type="text"  class="txt" style="width:60%;"/>
 						<input id="txtNo2.*" type="text" class="txt" style="width:18%;"/>
 					</td>
-					<td align="center">
-						<input class="btn"  id="btnRecord.*" type="button" value='.' style=" font-weight: bold;" />
-					</td>
+					<td align="center"><input class="btn"  id="btnRecord.*" type="button" value='.' style=" font-weight: bold;" /></td>
 					<td align="center"><input class="btn"  id="btnStk.*" type="button" value='.' style="width:1%;"/></td>
 				</tr>
 			</table>
