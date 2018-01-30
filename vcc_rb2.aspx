@@ -16,7 +16,7 @@
 			}
 			q_tables = 's';
 			var q_name = "vcc";
-			var q_readonly = ['txtNoa','txtComp','txtnick', 'txtMoney', 'txtTotal', 'txtWorker', 'txtWorker2'];
+			var q_readonly = ['txtNoa','txtCno','txtAcomp','txtComp','txtnick','txtMoney','txtTotal','txtWorker','txtWorker2'];
 			var q_readonlys = ['txtTotal', 'txtOrdeno', 'txtNo2','txtNoq'];
 			var bbmNum = [ ['txtPrice', 10, 3, 1],['txtMoney', 15, 0, 1], ['txtTax', 15, 0, 1],['txtTotal', 15, 0, 1],['txtTranmoney', 15, 0, 1]];
 			var bbsNum = [];
@@ -130,8 +130,6 @@
 				$('#txtTax').change(function() {
 					sum();
 				});
-	
-				
 
 				$('#lblOrdeno').click(function() {
 					q_pop('txtOrdeno', "orde.aspx?" + r_userno + ";" + r_name + ";" + q_time + ";charindex(noa,'" + $('#txtOrdeno').val() + "')>0;" + r_accy + '_' + r_cno, 'orde', 'noa', '', "92%", "1024px", q_getMsg('lblOrdeno'), true);
@@ -326,41 +324,41 @@
 						sum();
 						break;
 					case 'msg_stk_all':
-						var as = _q_appendData("stkucc", "", true);
-						var rowslength=document.getElementById("table_stk").rows.length-3;
-							for (var j = 1; j < rowslength; j++) {
-								document.getElementById("table_stk").deleteRow(3);
-							}
-						var stk_row=0;
-						
-						var stkmount = 0;
-						for (var i = 0; i < as.length; i++) {
-							//倉庫庫存
-							if(dec(as[i].mount)!=0){
-								var tr = document.createElement("tr");
-								tr.id = "bbs_"+j;
-								tr.innerHTML = "<td id='assm_tdStoreno_"+stk_row+"'><input id='assm_txtStoreno_"+stk_row+"' type='text' class='txt c1' value='"+as[i].storeno+"' disabled='disabled'/></td>";
-								tr.innerHTML+="<td id='assm_tdStore_"+stk_row+"'><input id='assm_txtStore_"+stk_row+"' type='text' class='txt c1' value='"+as[i].store+"' disabled='disabled' /></td>";
-								tr.innerHTML+="<td id='assm_tdMount_"+stk_row+"'><input id='assm_txtMount_"+stk_row+"' type='text' class='txt c1 num' value='"+as[i].mount+"' disabled='disabled'/></td>";
-								var tmp = document.getElementById("stk_close");
-								tmp.parentNode.insertBefore(tr,tmp);
-								stk_row++;
-							}
-							//庫存總計
-							stkmount = stkmount + dec(as[i].mount);
-						}
-						var tr = document.createElement("tr");
-						tr.id = "bbs_"+j;
-						tr.innerHTML="<td colspan='2' id='stk_tdStore_"+stk_row+"' style='text-align: right;'><span id='stk_txtStore_"+stk_row+"' class='txt c1' >倉庫總計：</span></td>";
-						tr.innerHTML+="<td id='stk_tdMount_"+stk_row+"'><span id='stk_txtMount_"+stk_row+"' type='text' class='txt c1 num' > "+stkmount+"</span></td>";
-						var tmp = document.getElementById("stk_close");
-						tmp.parentNode.insertBefore(tr,tmp);
-						stk_row++;
-						
-						$('#div_stk').css('top',mouse_point.pageY-parseInt($('#div_stk').css('height')));
-						$('#div_stk').css('left',mouse_point.pageX-parseInt($('#div_stk').css('width')));
-						$('#div_stk').toggle();
-						break;
+                        var as = _q_appendData("stkucc", "", true);
+                        var rowslength=document.getElementById("table_stk").rows.length-3;
+                            for (var j = 1; j < rowslength; j++) {
+                                document.getElementById("table_stk").deleteRow(3);
+                            }
+                        var stk_row=0;
+                        
+                        var stkmount = 0;
+                        for (var i = 0; i < as.length; i++) {
+                            //倉庫庫存
+                            if(dec(as[i].mount)!=0){
+                                var tr = document.createElement("tr");
+                                tr.id = "bbs_"+j;
+                                tr.innerHTML = "<td id='assm_tdStoreno_"+stk_row+"'><input id='assm_txtStoreno_"+stk_row+"' type='text' class='txt c1' value='"+as[i].storeno+"' disabled='disabled'/></td>";
+                                tr.innerHTML+="<td id='assm_tdStore_"+stk_row+"'><input id='assm_txtStore_"+stk_row+"' type='text' class='txt c1' value='"+as[i].store+"' disabled='disabled' /></td>";
+                                tr.innerHTML+="<td id='assm_tdMount_"+stk_row+"'><input id='assm_txtMount_"+stk_row+"' type='text' class='txt c1 num' value='"+as[i].mount+"' disabled='disabled'/></td>";
+                                var tmp = document.getElementById("stk_close");
+                                tmp.parentNode.insertBefore(tr,tmp);
+                                stk_row++;
+                            }
+                            //庫存總計
+                            stkmount = stkmount + dec(as[i].mount);
+                        }
+                        var tr = document.createElement("tr");
+                        tr.id = "bbs_"+j;
+                        tr.innerHTML="<td colspan='2' id='stk_tdStore_"+stk_row+"' style='text-align: right;'><span id='stk_txtStore_"+stk_row+"' class='txt c1' >倉庫總計：</span></td>";
+                        tr.innerHTML+="<td id='stk_tdMount_"+stk_row+"'><span id='stk_txtMount_"+stk_row+"' type='text' class='txt c1 num' > "+stkmount+"</span></td>";
+                        var tmp = document.getElementById("stk_close");
+                        tmp.parentNode.insertBefore(tr,tmp);
+                        stk_row++;
+                        
+                        $('#div_stk').css('top',mouse_point.pageY-parseInt($('#div_stk').css('height')));
+                        $('#div_stk').css('left',mouse_point.pageX-parseInt($('#div_stk').css('width')));
+                        $('#div_stk').toggle();
+                        break;
 					case 'cno_acomp':
 						var as = _q_appendData("acomp", "", true);
 						if (as[0] != undefined) {
@@ -424,17 +422,17 @@
 						q_gt('calstk', t_where, 0, 0, 0, "msg_stk", r_accy);
 						break;
 					case 'msg_stk':
-						var as = _q_appendData("stkucc", "", true);
-						var stkmount = 0;
-						t_msg = '';
-						for (var i = 0; i < as.length; i++) {
-							stkmount = stkmount + dec(as[i].mount);
-						}
-						t_msg = "庫存量：" + stkmount;
-						//平均成本
-						var t_where = "where=^^ productno ='" + $('#txtProductno_' + b_seq).val() + "' order by datea desc ^^ stop=1";
-						q_gt('wcost', t_where, 0, 0, 0, "msg_wcost", r_accy);
-						break;
+                        var as = _q_appendData("stkucc", "", true);
+                        var stkmount = 0;
+                        t_msg = '';
+                        for (var i = 0; i < as.length; i++) {
+                            stkmount = stkmount + dec(as[i].mount);
+                        }
+                        t_msg = "庫存量：" + stkmount;
+                        //平均成本
+                        var t_where = "where=^^ productno ='" + $('#txtProductno_' + b_seq).val() + "' order by datea desc ^^ stop=1";
+                        q_gt('wcost', t_where, 0, 0, 0, "msg_wcost", r_accy);
+                        break;
 					case 'msg_wcost':
 						var as = _q_appendData("wcost", "", true);
 						var wcost_price;
@@ -679,19 +677,19 @@
 							q_box("z_vccrecord.aspx?" + r_userno + ";" + r_name + ";" + q_time + ";" + t_where, 'vccrecord', "95%", "95%", q_getMsg('lblRecord_s'));
 						});
 						
-						$('#btnStk_' + i).mousedown(function(e) {
-							t_IdSeq = -1;
-							q_bodyId($(this).attr('id'));
-							b_seq = t_IdSeq;
-							if (!emp($('#txtProductno_' + b_seq).val()) && $("#div_stk").is(":hidden")) {
-								mouse_point=e;
-								document.getElementById("stk_productno").innerHTML = $('#txtProductno_' + b_seq).val();
-								document.getElementById("stk_product").innerHTML = $('#txtProduct_' + b_seq).val();
-								//庫存
-								var t_where = "where=^^ ['" + q_date() + "','','" + $('#txtProductno_' + b_seq).val() + "') ^^";
-								q_gt('calstk', t_where, 0, 0, 0, "msg_stk_all", r_accy);
-							}
-						});
+                        $('#btnStk_' + i).mousedown(function(e) {
+                            t_IdSeq = -1;
+                            q_bodyId($(this).attr('id'));
+                            b_seq = t_IdSeq;
+                            if (!emp($('#txtProductno_' + b_seq).val()) && $("#div_stk").is(":hidden")) {
+                                mouse_point=e;
+                                document.getElementById("stk_productno").innerHTML = $('#txtProductno_' + b_seq).val();
+                                document.getElementById("stk_product").innerHTML = $('#txtProduct_' + b_seq).val();
+                                //庫存
+                                var t_where = "where=^^ ['" + q_date() + "','"+$('#txtStoreno').val()+"','" + $('#txtProductno_' + b_seq).val() + "') ^^";
+                                q_gt('calstk', t_where, 0, 0, 0, "msg_stk_all", r_accy);
+                            }
+                        });
 					}
 				}
 				_bbsAssign();
@@ -1083,14 +1081,17 @@
 								<tr>
 									<td class="td1"><span> </span><a id="lblCust" class="lbl btn"> </a></td>
 									<td class="td2"><input id="txtCustno" type="text" class="txt c1"/></td>
-									<td class="td2" colspan="2"><input id="txtComp" type="text" class="txt c1" size="20%"/></td>
-									<td class="td3"><input id="txtnick" type="text" class="txt c1"/></td>
-									<td class="td3" colspan="3"><input id="txtTel" type="text" class="txt c1" size="20%"/></td>
+									<td class="td2" colspan="2"><input id="txtComp" type="text" class="txt c1" size="20%" placeholder="客戶名稱"/></td>
+									<td class="td3"><input id="txtnick" type="text" class="txt c1" placeholder="客戶簡稱"/></td>
+									<td class="td3" colspan="3"><input id="txtTel" type="text" class="txt c1" size="20%" placeholder="客戶電話"/></td>
 								</tr>
 								<tr>
 									<td class="td1"><span> </span><a id="lblWorker" class="lbl"> </a></td>
 									<td class="td2"><input id="txtWorker" type="text" class="txt c1"/></td>
 									<td class="td3"><input id="txtWorker2" type="text" class="txt c1"/></td>
+									<!---
+									<td class="td3"><input id="txtCustno2" type="text" class="txt c1"/></td>
+									--->
 								</tr>
 								<tr>
 									<td class="td1"><span> </span><a id="lblMemo" class="lbl"> </a></td>
@@ -1138,10 +1139,14 @@
 					<td align="center" style="width:80px;"><a id='lblMount_s'> </a></td>
 					<td align="center" style="width:80px;"><a id='lblPrice_s'> </a></td>
 					<td align="center" style="width:80px;"><a id='lblTotal_s'> </a></td>
+                    <!---
 					<td align="center" style="width:120px;"><a id='lblStore_s'> </a></td>
+                    --->
 					<td align="center" style="width:100px;" class="isRack"><a id='lblRackno_s'> </a></td>
 					<td align="center" style="width:150px;"><a id='lblMemo_s'> </a></td>
+					<!---
 					<td align="center" style="width:40px;"><a id='lblRecord_s'> </a></td>
+					--->
 					<td align="center" style="width:40px;"><a id='lblStk_s'> </a></td>
 				</tr>
 				<tr style='background:#cad3ff;'>
@@ -1159,11 +1164,13 @@
 					<td><input id="txtMount.*" type="text" class="txt num c1"/></td>
 					<td><input id="txtPrice.*" type="text" class="txt num c1"/></td>
 					<td><input id="txtTotal.*" type="text" class="txt num c1"/></td>
+					<!---
 					<td>
 						<input id="txtStoreno.*" type="text" class="txt c1" style="width: 75%"/>
 						<input class="btn"  id="btnStoreno.*" type="button" value='.' style=" font-weight: bold;" />
 						<input id="txtStore.*" type="text" class="txt c1"/>
 					</td>
+					--->
 					<td class="isRack">
 						<input class="btn"  id="btnRackno.*" type="button" value='.' style="float:left;" />
 						<input id="txtRackno.*" type="text" class="txt c1" style="width: 70%"/>
@@ -1174,7 +1181,9 @@
 						<input id="txtOrdeno.*" type="text"  class="txt" style="width:60%;"/>
 						<input id="txtNo2.*" type="text" class="txt" style="width:18%;"/>
 					</td>
+					<!---
 					<td align="center"><input class="btn"  id="btnRecord.*" type="button" value='.' style=" font-weight: bold;" /></td>
+					--->
 					<td align="center"><input class="btn"  id="btnStk.*" type="button" value='.' style="width:1%;"/></td>
 				</tr>
 			</table>
