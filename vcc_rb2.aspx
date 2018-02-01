@@ -1135,7 +1135,6 @@
 					<td align="center" style="width:180px" id='xbProductno'><a id='lblProductno_s'> </a></td>
 					<td align="center" style="width:180px;" id='xbProduct'><a id='lblProduct_s'> </a></td>
 					<td align="center" style="width:95px;" class="isStyle"><a id='lblStyle_s'> </a></td>
-					<td class="BQ" align="center" style="width:80px;display:none;"><a id='lblGWeighta'>單重</a></td>
 					<td align="center" style="width:80px;"><a id='lblMount_s'> </a></td>
 					<td align="center" style="width:80px;"><a id='lblPrice_s'> </a></td>
 					<td align="center" style="width:80px;"><a id='lblTotal_s'> </a></td>
