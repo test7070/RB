@@ -836,7 +836,7 @@
                 _btnIns();
                 $('#txtInvono').val('');
                 $('#chkIsgenvcca').prop('checked',true);
-                $('#txtMon').val(q_date);
+                //$('#txtMon').val('');
                 $('#txt' + bbmKey[0].substr(0, 1).toUpperCase() + bbmKey[0].substr(1)).val('AUTO');
                 $('#txtCno').val(z_cno);
                 $('#txtAcomp').val(z_acomp);
@@ -851,12 +851,11 @@
 				$('#txtSalesno').val(r_userno);
 				$('#txtSales').val(r_name);
                 $('#cmbTaxtype').val(q_getPara('sys.d4taxtype'));
-				/////直接產生民國年
-				/*var t_date = new Date();
-				var t_year = t_date.getFullYear()-1911;
+				/////產生民國年 "t_date.getFullYear();-1911"
+				var t_date = new Date();
+				var t_year = t_date.getFullYear();
 				var t_month = t_date.getMonth()+1;
-				var t_day = t_date.getDate();
-				$('#txtMon').val(t_year+'/'+(t_month<10?'0':'')+t_month);*/
+				$('#txtMon').val(t_year+'/'+(t_month<10?'0':'')+t_month);
 				//$('#txtDatea').val(t_year+'/'+(t_month<10?'0':'')+t_month+'/'+(t_day<10?'0':'')+t_day);
 				
 				
