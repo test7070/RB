@@ -9,7 +9,6 @@
         <script src="../script/qbox.js" type="text/javascript"></script>
         <script src='../script/mask.js' type="text/javascript"></script> 
         <link href="../qbox.css" rel="stylesheet" type="text/css" />
-		<script src='59.125.143.170/t_js/vcc_rb2.js' type="text/javascript"></script> 
         <script type="text/javascript">
             this.errorHandler = null;
             function onPageError(error) {
