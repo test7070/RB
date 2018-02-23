@@ -16,7 +16,7 @@
             }
             q_tables = 's';
             var q_name = "vcc";
-            var q_readonly = ['txtNoa','txtComp','txtNick','txtCardeal','txtSales','txtCno','txtAcomp','txtMoney','txtTax','txtTotal','txtWorker','txtWorker2','txtTranstart','txtStore','txtStatus','txtOrdeno'];
+            var q_readonly = ['txtNoa','txtComp','txtNick','txtCardeal','txtSales','txtCno','txtAcomp','txtPaytype','txtMoney','txtTax','txtTotal','txtWorker','txtWorker2','txtTranstart','txtStore','txtZipname','txtOrdeno'];
             var q_readonlys = ['txtTotal', 'txtNo2','txtNoq'];
             var bbmNum = [];
             var bbsNum = [];
@@ -81,14 +81,13 @@
                 bbmNum = [   ['txtMoney', 15, 0, 1], ['txtTax', 15, 0, 1],['txtTotal', 15, 0, 1]];
                 bbsNum = [['txtPrice', 12, q_getPara('vcc.pricePrecision'), 1], ['txtMount', 9, q_getPara('vcc.mountPrecision'), 1], ['txtTotal', 15, 0, 1]];
                 
-                q_cmbParse("cmbTypea", q_getPara('vcc.typea'));
+                q_cmbParse("cmbTypea", q_getPara('vcc.typea')); //出or退
                 q_cmbParse("combPay", ('').concat(new Array('　　　　','現金','刷卡','支付宝')));
                 q_cmbParse("cmbStatus", ('').concat(new Array('　　　　','已出貨','未出貨')));
                 q_cmbParse("cmbTaxtype", q_getPara('sys.taxtype'));
                 
                 var t_where = "where=^^ 1=0  ^^ stop=100";
                 q_gt('custaddr', t_where, 0, 0, 0, "");
-                $('#lblType1').text('出貨情況');
                 $('#lblProductno').text('產品編號');
                 $('#lblProduct').text('產品名稱');
                 $('#lblStoreno').text('倉庫編號');
@@ -171,6 +170,23 @@
                     }
                 }
             }
+			
+			function q_funcPost(t_func, result) {
+				switch(t_func) {
+					case 'qtxt.query.orde_ins':
+						if(!emp($('#txtNoa').val())){
+							//判斷get 是否有被產生
+							var t_where = "where=^^ noa='"+$('#txtNoa').val()+"' ^^";
+							q_gt('view_get', t_where, 0, 0, 0, "view_getexists_ins");
+						}
+						break;
+					case 'get_post.post.modi':
+						//重新產生get
+						q_func('qtxt.query.orde_ins', 'vcc_rb2.txt,changepacking_gu,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';' + encodeURI(r_name));
+						break;
+				}
+			}
+			
             function q_boxClose(s2) {
                 var ret;
                 switch (b_pop) {
@@ -438,7 +454,7 @@
                             $('#txtSales').val(as[0].sales);
                             var t_where = "where=^^ noa='"+as[0].salesno+"' ^^";
                             q_gt('sss', t_where, 0, 0, 0, "sss");
-                            $('#txtPaytype').val(as[0].paytype);
+                            //$('#txtPaytype').val(as[0].paytype);
                             //$('#txtStoreno').val(as[0].postname);
                             //$('#txtStore').val(as[0].conform);
                             $('#cmbTaxtype').val(as[0].taxtype);
@@ -686,12 +702,11 @@
                     q_gt('cust', t_where, 0, 0, 0, "startdate", r_accy);
                     return;
                 }
-                /*if (emp($('#txtMon').val()))
-                    $('#txtMon').val($('#txtDatea').val().substr(0, 6));*/
-                
+				
                 check_startdate=false;
                 check_vcca=false;
                 check_stkucc=false;
+				check_ordeno=false;
                 
                 //106/09/15檢查出貨數量是否大於訂單數量 避免重複匯入同樣2次出貨單
                 t_err='';
@@ -744,7 +759,7 @@
                 if (!q_cur)
                     cmb.value = '';
                 else
-                    $('#txtStatus').val(cmb.value);
+                    $('#txtZipname').val(cmb.value);
                 cmb.value = '';
             }
             var mouse_point;
@@ -847,7 +862,7 @@
                 $('#txtPaytype').val('現金'); //預設現金 (因為現場銷售)
 				$('#txtStoreno').val('000');  //預設台北小倉
                 $('#txtStore').val('台北小倉');  //預設台北小倉
-                $('#txtStatus').val('已出貨');  //預設已出貨 (因為現場銷售)
+                $('#txtZipname').val('已出貨');  //預設已出貨 (因為現場銷售)
 				$('#txtSalesno').val(r_userno);
 				$('#txtSales').val(r_name);
                 $('#cmbTaxtype').val(q_getPara('sys.d4taxtype'));
@@ -863,7 +878,10 @@
                     var t_where = "where=^^ noa='" + $('#txtCustno').val() + "' ^^ stop=100";
                     q_gt('custaddr', t_where, 0, 0, 0, "");
                 }
-                $('#txtTotal').val(1);
+				$('#txtMoney').val(0);
+                $('#txtTax').val(0);
+				$('#txtTotal').val(0);
+                
                 
                 //105/06/07 原抓製單人部門 改成抓業務部門
                 var t_where = "where=^^ noa='"+r_partno+"' ^^";
@@ -1131,7 +1149,7 @@
             }
             .dview {
                 float: left;
-                width: 30%;
+                width: 25%;
                 border-width: 0px;
             }
             .tview {
@@ -1270,15 +1288,15 @@
                 </tr>
             </table>
         </div>
-        <div id="dmain" style="width: 1258px;" ><!--#include file="../inc/toolbar.inc"-->
+        <div id="dmain" style="width: 1400px;" ><!--#include file="../inc/toolbar.inc"-->
             <div class="dview" id="dview" >
                 <table class="tview" id="tview">
                     <tr>
                         <td align="center" style="width:5%"><a id='vewChk'> </a></td>
                         <td align="center" style="width:5%"><a id='vewType'> </a></td>
-                        <td align="center" style="width:25%"><a id='vewDatea'> </a></td>
+                        <td align="center" style="width:24%"><a id='vewDatea'> </a></td>
                         <td align="center" style="width:25%"><a id='vewNoa'> </a></td>
-                        <td align="center" style="width:40%"><a id='vewComp'> </a></td>
+                        <td align="center" style="width:30%"><a id='vewComp'> </a></td>
                     </tr>
                     <tr>
                         <td><input id="chkBrow.*" type="checkbox" style=''/></td>
@@ -1290,107 +1308,128 @@
                 </table>
             </div>
             <div class='dbbm'><!--- style="width: 900px;"--->
-                <table class="tbbm" id="tbbm" style="width: 100%;height: 362px;" border="2">
+                <table class="tbbm" id="tbbm" style="width:1000px;height: 362px;" border="2">
                     <tr>
                         <td width="70%">
                             <table border="0" >
-                                <tr><td colspan="10">
-										<span> </span><font size="6"><b>現場銷售系統</b></font>
-										<input style="float: right;" class="btn" id="btnvcctype" onClick="btnvcctype()" type="button" value='退貨' />
+                                <tr>
+                                    <td colspan="10">
+										<span> </span><font size="6"><b><a id="lblFromname"></b></font>
+										<!---<input style="float: right;" class="btn" id="btnvcctype" onClick="btnvcctype()" type="button" value='退貨' />--->
+										<input style="float: right;" class="btn" id="btnVcctoOrde" type="button" value="D" />
 										<hr>
 									</td>
+                                </tr>
                                 <tr>
-                                    <td width="100px"><span> </span><a id="lblNoa" class="lbl"> </a></td>
-                                    <td width="115px"><input id="txtNoa" type="text" class="txt c1" /></td>
-                                    <td colspan="6">
-                                        <a id="lblDatea" class="lbl" style="float: left;"> </a><span style="float: left;"> </span>
-											<input id="txtDatea" type="text" class="txt c1" style="width: 80px;float: left;"/>
-											<span style="float: left;"> </span><span style="float: left;"> </span><span style="float: left;"> </span>
-                                        <a id="lblMon" class="lbl" style="float: left;"> </a> <span style="float: left;"> </span>
-                                        <input id="txtMon" type="text" class="txt c1" style="width: 75px;float: left;"/>
-										<a id="lblType" class="lbl1"></a><select id="cmbTypea"> </select>
+                                    <td width="115px"></td>
+                                    <td width="200px"></td>
+                                    <td width="150px"></td>
+                                    <td width="100px"></td>
+                                    <td width="100px"></td>
+                                    <td width="80px"></td>
+                                    <td width="70px"></td>
+                                    <td width="70px"></td>
+                                </tr>
+                                <tr>
+                                    <td><span> </span><a id="lblNoa" class="lbl"> </a></td>
+                                    <td><input id="txtNoa" type="text" class="txt c1" /></td>
+                                    <td><span> </span><a id="lblDatea" class="lbl"> </a></td>
+                                    <td><input id="txtDatea" type="text" class="txt c1" style="width: 80px;float: left;"/></td>
+                                    <td><span> </span><a id="lblMon" class="lbl"> </a></td>
+                                    <td><input id="txtMon" type="text" class="txt c1" style="width: 75px;float: left;"/></td>
+                                    <td><span> </span><a id="lblType" class="lbl"> </a></td>
+                                    <td><select id="cmbTypea"> </select></td>
+                                </tr>
+                                <tr>
+                                    <td><span> </span><a id="lblAcomp" class="lbl btn"> </a></td>
+                                    <td><input id="txtCno" type="text" class="txt c1"/></td>
+                                    <td colspan="6"><input id="txtAcomp" type="text" class="txt c1"/></td>
+                                </tr>
+                                <tr>
+                                    <td><span> </span><a id="lblCust" class="lbl btn"> </a></td>
+                                    <td><input id="txtCustno" type="text" class="txt c1"/></td>
+                                    <td colspan="4">
+                                        <input id="txtComp" type="text" class="txt c1" style="width:65%;" placeholder="客戶名稱"/>
+                                        <input id="txtNick" type="text" class="txt c1" style="width:35%;" placeholder="客戶簡稱"/>
                                     </td>
+                                    <td colspan="2"><input id="txtTel" type="text" class="txt c1" placeholder="客戶電話"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="td1"><span> </span><a id="lblAcomp" class="lbl btn"> </a></td>
-                                    <td class="td2"><input id="txtCno" type="text" class="txt c1"/></td>
-                                    <td class="td2" colspan="8"><input id="txtAcomp" type="text" class="txt c1"/></td>
+                                    <td><span> </span><a id="lblSales" class="lbl btn"> </a></td>
+                                    <td><input id="txtSalesno" type="text" class="txt c1"/></td>
+                                    <td><input id="txtSales" type="text" class="txt c1"/></td>
+                                    <td><span> </span><a id="lblStore" class="lbl btn"> </a></td>
+                                    <td colspan="2">
+                                        <input id="txtStoreno" type="text" class="txt c1" style="width:49%;"/>
+                                        <input id="txtStore" type="text" class="txt c1" style="width:49%;"/>
+                                    </td>
+                                    <td colspan="2">　</td>
                                 </tr>
                                 <tr>
-                                    <td class="td1"><span> </span><a id="lblCust" class="lbl btn"> </a></td>
-                                    <td class="td2"><input id="txtCustno" type="text" class="txt c1"/></td>
-                                    <td class="td2" colspan="3">
-										<input id="txtComp" type="text" class="txt c1" style="width:65%;" placeholder="客戶名稱"/>
-										<input id="txtNick" type="text" class="txt c1" style="width:35%;" placeholder="客戶簡稱"/>
-									</td>
-                                    <td class="td3" colspan="5"><input id="txtTel" type="text" class="txt c1" size="20%" placeholder="客戶電話"/></td>
+                                    <td><span> </span><a id="lblMemo" class="lbl"> </a></td>
+                                    <td colspan="7"><textarea id="txtMemo" cols="10" rows="5" style="width:99%;height:50px;"> </textarea></td>
                                 </tr>
                                 <tr>
-                                    <td class="td1"><span> </span><a id="lblSales" class="lbl btn"> </a></td>
-                                    <td class="td2"><input id="txtSalesno" type="text" class="txt c1"/></td>
-                                    <td class="td3"><input id="txtSales" type="text" class="txt c1"/></td>
-                                    <td colspan="3" width="50px"><span> </span><a id="lblStore" class="lbl btn"> </a></td>
-                                    <td><input id="txtStoreno" type="text" class="txt c1" style="width:49%;"/><input id="txtStore" type="text" class="txt c1" style="width:49%;"/></td>
-                                </tr>
-                                <tr>
-                                    <td class="td1"><span> </span><a id="lblMemo" class="lbl"> </a></td>
-                                    <td class="td2" colspan="7"><textarea id="txtMemo" cols="10" rows="5" style="width:99%;height:50px;"> </textarea></td>
-                                </tr>
-                                <tr>
-                                    <td ><span> </span><a id="lblOrdeno" class="lbl"></a></td>
-                                    <td colspan="2"><input id="txtOrdeno" type="text" class="txt c1" placeholder="AUTO" /></td>
-                                    <td colspan="2"><span> </span><a id="lblWorker" class="lbl"></a></td>
-                                    <td colspan="5">
-										<input id="txtWorker" type="text" class="txt c1" style="width:49%;" /><input id="txtWorker2" type="text" class="txt c1"style="width:49%;" />
-									</td>
+                                    <td><span> </span><a id="lblOrdeno" class="lbl"></a></td>
+                                    <td><input id="txtOrdeno" type="text" class="txt c1" placeholder="AUTO" /></td>
+                                    <td><span> </span><a id="lblWorker" class="lbl"></a></td>
+                                    <td><input id="txtWorker" type="text" class="txt c1" /></td>
+                                    <td><input id="txtWorker2" type="text" class="txt c1" /></td>
+                                    <td>　</td>
+                                    <td>　</td>
+                                    <td>　</td>
                                 </tr>
                             </table>
                         </td>
-                        <td width="28%" >
+                        <td width="30%">
                             <table border="0">
                                 <tr>
-                                    <td colspan="2"><a id="lblIsgenvcca" class="lbl"> </a></td>
-                                    <td><input id="chkIsgenvcca" type="checkbox" checked /></td>
+									<td>　　　　　　　</td>
+									<td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+										<input id="chkIsgenvcca" type="checkbox" checked class="lbl" style="float:left;" />
+										<a id="lblIsgenvcca" class="lbl1"> </a>
+									</td>
                                 </tr>
                                 <tr>
                                     <td width="30%"><a id="lblInvono" class="lbl btn vcca"> </a></td>
-                                    <td>
-                                        <input id="txtInvono" type="text" class="txt c1 vcca" style="width: 80%;"/>
-                                        <input id="txtInvo" type="hidden" class="txt c1"/><!--有值表示訂單轉發票-->
-                                    </td>
+                                    <td><input id="txtInvono" type="text" class="txt c1 vcca" style="width:55%;"/></td>
                                 </tr>
                                 
                                 <tr>
                                     <td><span> </span><a id="lblPay" class="lbl"> </a></td>
                                     <td>
-                                        <input id="txtPaytype" type="text" class="txt c1" style="width: 48%;"/>
-                                        <select id="combPay" style="width: 12%;" onchange="combPay_chg()"> </select>
+                                        <input id="txtPaytype" type="text" class="txt c1" style="width:30%;"/>
+                                        <select id="combPay" style="width:12%;" onchange="combPay_chg()"> </select>
                                     </td>
                                 </tr>
                                 
                                 <tr>
                                     <td><span> </span><a id="lblTranmoney" class="lbl"> </a></td>
-                                    <td><input id="txtTranmoney" type="text" class="txt num c1" style="width: 80%;"/></td>
+                                    <td><input id="txtTranmoney" type="text" class="txt num c1" style="width:50%;"/></td>
                                 </tr>
                                 <tr>
                                     <td><span> </span><a id="lblMoney" class="lbl"> </a></td>
-                                    <td><input id="txtMoney" type="text" class="txt num c1" style="width: 80%;"/></td>
+                                    <td><input id="txtMoney" type="text" class="txt num c1" style="width:50%;"/></td>
                                 </tr>
                                 <tr>
                                     <td><span> </span><a id="lblTax" class="lbl"> </a></td>
                                     <td>
-                                        <input id="txtTax" type="text" class="txt num c1 istax" style="width: 30%;"/>
-                                        <select id="cmbTaxtype" style="width: 49%;" onchange="calTax();"> </select>
+                                        <input id="txtTax" type="text" class="txt num c1 istax" style="width: 40%;"/>
+                                        <select id="cmbTaxtype" style="width:40%;" onchange="calTax();"> </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td><span> </span><a id="lblTotal" class="lbl istax"> </a></td>
-                                    <td><input id="txtTotal" type="text" class="txt num c1 istax" style="width: 80%;"/></td>
+                                    <td><input id="txtTotal" type="text" class="txt num c1 istax" style="width:50%;"/></td>
                                 </tr>
                                 <tr>
                                     <td><a class="lbl" id="lblType1"></a></td>
-                                    <td><input id="txtStatus" type="text" class="txt c1" style="width: 49%;"/>
-										<select id="cmbStatus" style="width: 12%;" onchange="combStatus_chg();"> </select></td>
+                                    <td><input id="txtZipname" type="text" class="txt c1" style="width:30%;"/>
+										<select id="cmbStatus" style="width: 12%;" onchange="combStatus_chg();"></select>
+									</td>
                                 </tr>
                             </table>
                         </td>
@@ -1398,7 +1437,7 @@
                 </table>
             </div>
         </div>
-        <div class='dbbs' style="width: 1259px;">
+        <div class='dbbs' style="width: 1350px;">
             <table id="tbbs" class='tbbs'>
                 <tr style='color:White; background:#003366;' >
                     <td align="center" style="width:40px;"><input class="btn"  id="btnPlus" type="button" value='＋' style="font-weight: bold;width:" /></td>
