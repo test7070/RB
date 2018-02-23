@@ -1315,8 +1315,8 @@
                                 <tr>
                                     <td colspan="10">
 										<span> </span><font size="6"><b><a id="lblFromname"></b></font>
-										<!---<input style="float: right;" class="btn" id="btnvcctype" onClick="btnvcctype()" type="button" value='退貨' />--->
-										<input style="float: right;" class="btn" id="btnVcctoOrde" type="button" value="D" />
+										<!---<input style="float: right;" class="btn" id="btnvcctype" onClick="btnvcctype()" type="button" value='退貨' />
+										<input style="float: right;" class="btn" id="btnVcctoOrde" type="button" value="D" />--->
 										<hr>
 									</td>
                                 </tr>
