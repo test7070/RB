@@ -16,7 +16,7 @@
             }
             q_tables = 's';
             var q_name = "vcc";
-            var q_readonly = ['txtNoa','txtComp','txtNick','txtCardeal','txtSales','txtCno','txtAcomp','txtPaytype','txtMoney','txtTax','txtTotal','txtWorker','txtWorker2','txtTranstart','txtStore','txtZipname','txtOrdeno'];
+            var q_readonly = ['txtNoa','txtComp','txtNick','txtCardeal','txtSales','txtCno','txtAcomp','txtPaytype','txtMoney','txtTax','txtTotal','txtWorker','txtWorker2','txtTranstart','txtStore','txtZipname','txtOrdeno','txtInvono'];
             var q_readonlys = ['txtTotal', 'txtNo2','txtNoq'];
             var bbmNum = [];
             var bbsNum = [];
@@ -127,7 +127,12 @@
                         q_box("invo.aspx?" + r_userno + ";" + r_name + ";" + q_time + ";" + t_where, 'invo', "95%", "95%", $('#lblInvo').val());
                     }
                 });
-                
+                $('#cmbTypea').change(function() {  //判斷出or退 不產生發票
+					if($('#cmbTypea').val()=='2'){
+						$('#chkIsgenvcca').prop('checked',false);
+						$('#chkIsgenvcca').attr('disabled', 'disabled');
+					}
+				});
                 $('#txtCustno').change(function() {
                     if (!emp($('#txtCustno').val())) {
                         var t_where = "where=^^ noa='" + $('#txtCustno').val() + "'  ^^ stop=100";
@@ -170,42 +175,7 @@
                     }
                 }
             }
-			
-			function q_funcPost(t_func, result) {
-				switch(t_func) {
-					case 'qtxt.query.vcc2cng_rb':
-						var as = _q_appendData("tmp0", "", true, true);
-						if (as[0] != undefined) {
-							var t_cngno=as[0].cngno;
-							var t_err=as[0].err;	
-							if(t_err=='OK'){
-								alert('已產生客戶歸還調撥單【' + t_cngno+'】');
-								$('#txtTranstyle').val(t_cngno);
-								abbm[q_recno]['transtyle'] = t_cngno;
-							}
-							if(t_err=='modi'){
-								alert('已更新客戶歸還調撥單【' + t_cngno+'】');
-								$('#txtTranstyle').val(t_cngno);
-								abbm[q_recno]['transtyle'] = t_cngno;
-							}
-							if(t_err=='dele'){
-								alert('已刪除客戶歸還調撥單【' + t_cngno+'】');
-								$('#txtTranstyle').val('');
-								abbm[q_recno]['transtyle'] = '';
-							}
-						}
-						break;
-					/*case 'qtxt.query.orde_ins':
-						if(!emp($('#txtNoa').val())){	//判斷get 是否有被產生
-							var t_where = "where=^^ noa='"+$('#txtNoa').val()+"' ^^";
-							q_gt('view_get', t_where, 0, 0, 0, "view_getexists_ins");
-						}
-						break;
-					case 'get_post.post.modi':
-						q_func('qtxt.query.orde_ins', 'vcc_rb2.txt,changepacking_gu,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';' + encodeURI(r_name)); //重新產生get
-						break;*/
-				}
-			}
+
 			
             function q_boxClose(s2) {
                 var ret;
@@ -742,8 +712,8 @@
                         $('#txtStore_'+i).val($('#txtStore').val());
                     }
                 }
-                    
-                if (q_cur == 1)
+				
+				if (q_cur == 1)
                     $('#txtWorker').val(r_name);
                 else
                     $('#txtWorker2').val(r_name);
@@ -965,6 +935,12 @@
 
             function q_stPost() {
                 if (q_cur == 1 || q_cur == 2) {
+					if (q_cur == 1){ //新增
+						q_func('qtxt.query.VccToOrde_RB', 'vcc_rb2.txt,VccToOrde_RB,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';1;' + encodeURI(r_name));
+					}
+					if (q_cur == 2){ //修改
+						q_func('qtxt.query.VccToOrde_RB', 'vcc_rb2.txt,VccToOrde_RB,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';2;' + encodeURI(r_name));
+					}
                     var s2 = xmlString.split(';');
                     abbm[q_recno]['accno'] = s2[0];
                     
@@ -972,12 +948,37 @@
                         abbm[q_recno]['invono'] = s2[1];
                     
                     if(q_getPara('sys.project').toUpperCase()=='RB')
-                        q_func('qtxt.query.vcc2cng_rb', 'vcc.txt,vcc2cng_rb,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';' + encodeURI(r_name));
-						//q_func('qtxt.query.vcc_rb2toorde', 'test.txt,vcc_rb2toorde,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val()));
-                        //q_func('qtxt.query.vcc_rb2toorde', 'vcc.txt,vcc_rb2toorde,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';' + encodeURI(r_name));
+						q_func('qtxt.query.vcc2cng_rb', 'vcc.txt,vcc2cng_rb,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';' + encodeURI(r_name));
                 }
             }
-
+			
+			function q_funcPost(t_func, result) {
+				switch(t_func) {
+					case 'qtxt.query.vcc2cng_rb':
+						var as = _q_appendData("tmp0", "", true, true);
+						if (as[0] != undefined) {
+							var t_cngno=as[0].cngno;
+							var t_err=as[0].err;	
+							if(t_err=='OK'){
+								alert('已產生客戶歸還調撥單【' + t_cngno+'】');
+								$('#txtTranstyle').val(t_cngno);
+								abbm[q_recno]['transtyle'] = t_cngno;
+							}
+							if(t_err=='modi'){
+								alert('已更新客戶歸還調撥單【' + t_cngno+'】');
+								$('#txtTranstyle').val(t_cngno);
+								abbm[q_recno]['transtyle'] = t_cngno;
+							}
+							if(t_err=='dele'){
+								alert('已刪除客戶歸還調撥單【' + t_cngno+'】');
+								$('#txtTranstyle').val('');
+								abbm[q_recno]['transtyle'] = '';
+							}
+						}
+						break;
+				}
+			}
+			
             function refresh(recno) {
                 _refresh(recno);
                 HiddenTreat();
@@ -1076,6 +1077,10 @@
                 });
                 var t_where = " where=^^ vccno='" + $('#txtNoa').val() + "'^^";
                 q_gt('umms', t_where, 0, 0, 0, 'btnDele', r_accy);
+				//刪除  ok
+				q_func('qtxt.query.VccToOrde_RB', 'vcc_rb2.txt,VccToOrde_RB,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';0;' + encodeURI(r_name));
+				//q_func('qtxt.query.VccToOrde_RB', 'vcc_rb2.txt,VccToOrde_RB,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';0;' + encodeURI('RB'));
+				
             }
 
             function btnCancel() {
@@ -1155,13 +1160,14 @@
                 $('#txtTax').val(FormatNumber(t_tax));
                 $('#txtTotal').val(FormatNumber(t_total));
             }
-			function btnvcctype(){
+			/*function btnvcctype(){
 				if(confirm("退貨確認警告:請問是否要退貨此商品??")){
-					alert("開始退貨");
+					alert("開始退貨~~!!");	
+					q_func('qtxt.query.VccToOrde_RB', 'vcc_rb2.txt,VccToOrde_RB,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';3;' + encodeURI(r_name));
 				}else{
-					alert("取消退貨");
+					alert("取消退貨~~~");
 				}
-			}
+			}*/
         </script>
         <style type="text/css">
             #dmain {
@@ -1328,19 +1334,19 @@
                 </table>
             </div>
             <div class='dbbm'><!--- style="width: 900px;"--->
-                <table class="tbbm" id="tbbm" style="width:1000px;height: 362px;" border="2">
+                <table class="tbbm" id="tbbm" style="width:1000px;height:375px;" border="2">
                     <tr>
                         <td width="70%">
-                            <table border="0" >
+                            <table border="0" style="height: 100%;">
                                 <tr>
                                     <td colspan="10">
-										<span> </span><font size="6"><b><a id="lblFromname"></b></font>
-											<input style="float: right;" class="btn" id="btnvcctype" onClick="btnvcctype()" type="button" value='退貨' />
+										<span></span><font size="6"><b><a id="lblFromname"></b></font>
+										<!---<input style="float: right;" class="btn" id="btnvcctype" onClick="btnvcctype()" type="button" value='退貨' />--->
 										<hr>
 									</td>
                                 </tr>
                                 <tr>
-                                    <td width="115px"></td>
+                                    <td width="115px" height="1px"></td>
                                     <td width="200px"></td>
                                     <td width="150px"></td>
                                     <td width="100px"></td>
