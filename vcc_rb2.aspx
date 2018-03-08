@@ -173,17 +173,37 @@
 			
 			function q_funcPost(t_func, result) {
 				switch(t_func) {
-					case 'qtxt.query.orde_ins':
-						if(!emp($('#txtNoa').val())){
-							//判斷get 是否有被產生
+					case 'qtxt.query.vcc2cng_rb':
+						var as = _q_appendData("tmp0", "", true, true);
+						if (as[0] != undefined) {
+							var t_cngno=as[0].cngno;
+							var t_err=as[0].err;	
+							if(t_err=='OK'){
+								alert('已產生客戶歸還調撥單【' + t_cngno+'】');
+								$('#txtTranstyle').val(t_cngno);
+								abbm[q_recno]['transtyle'] = t_cngno;
+							}
+							if(t_err=='modi'){
+								alert('已更新客戶歸還調撥單【' + t_cngno+'】');
+								$('#txtTranstyle').val(t_cngno);
+								abbm[q_recno]['transtyle'] = t_cngno;
+							}
+							if(t_err=='dele'){
+								alert('已刪除客戶歸還調撥單【' + t_cngno+'】');
+								$('#txtTranstyle').val('');
+								abbm[q_recno]['transtyle'] = '';
+							}
+						}
+						break;
+					/*case 'qtxt.query.orde_ins':
+						if(!emp($('#txtNoa').val())){	//判斷get 是否有被產生
 							var t_where = "where=^^ noa='"+$('#txtNoa').val()+"' ^^";
 							q_gt('view_get', t_where, 0, 0, 0, "view_getexists_ins");
 						}
 						break;
 					case 'get_post.post.modi':
-						//重新產生get
-						q_func('qtxt.query.orde_ins', 'vcc_rb2.txt,changepacking_gu,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';' + encodeURI(r_name));
-						break;
+						q_func('qtxt.query.orde_ins', 'vcc_rb2.txt,changepacking_gu,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';' + encodeURI(r_name)); //重新產生get
+						break;*/
 				}
 			}
 			
@@ -1315,8 +1335,7 @@
                                 <tr>
                                     <td colspan="10">
 										<span> </span><font size="6"><b><a id="lblFromname"></b></font>
-										<!---<input style="float: right;" class="btn" id="btnvcctype" onClick="btnvcctype()" type="button" value='退貨' />
-										<input style="float: right;" class="btn" id="btnVcctoOrde" type="button" value="D" />--->
+											<input style="float: right;" class="btn" id="btnvcctype" onClick="btnvcctype()" type="button" value='退貨' />
 										<hr>
 									</td>
                                 </tr>
