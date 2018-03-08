@@ -1630,13 +1630,13 @@
 						<td> </td>
 					</tr>
 					<tr class="tr1">
-						<td><span> </span><a id='lblOdate' class="lbl"> </a></td>
+						<td><span> </span><a id='lblOdate' class="lbl"></a></td>
 						<td><input id="txtOdate" type="text" class="txt c1"/></td>
 						<td><input id="txtMon" type="text" class="txt c1"/></td>
-						<td><span> </span><a id='lblStype' class="lbl"> </a></td>
+						<td><span> </span><a id='lblStype' class="lbl"></a></td>
 						<td><select id="cmbStype" class="txt c1"> </select></td>
-						<td> </td>
-						<td><span> </span><a id='lblNoa' class="lbl"> </a></td>
+						<td></td>
+						<td><span></span><a id='lblNoa' class="lbl"></a></td>
 						<td colspan="2"><input id="txtNoa" type="text" class="txt c1"/></td>
 					</tr>
 					<tr class="tr2">
