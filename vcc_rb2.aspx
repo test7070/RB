@@ -836,7 +836,7 @@
                 HiddenTreat();
                 refreshBbm();
             }
-
+			
             function btnIns() {
                 _btnIns();
                 $('#txtInvono').val('');
@@ -863,7 +863,6 @@
 				$('#txtMon').val(t_year+'/'+(t_month<10?'0':'')+t_month);
 				//$('#txtDatea').val(t_year+'/'+(t_month<10?'0':'')+t_month+'/'+(t_day<10?'0':'')+t_day);
 				
-				
                 if (!emp($('#txtCustno').val())) {
                     var t_where = "where=^^ noa='" + $('#txtCustno').val() + "' ^^ stop=100";
                     q_gt('custaddr', t_where, 0, 0, 0, "");
@@ -871,8 +870,7 @@
 				$('#txtMoney').val(0);
                 $('#txtTax').val(0);
 				$('#txtTotal').val(0);
-                
-                
+				
                 //105/06/07 原抓製單人部門 改成抓業務部門
                 var t_where = "where=^^ noa='"+r_partno+"' ^^";
                 q_gt('part', t_where, 0, 0, 0, "getpart");
@@ -937,6 +935,8 @@
                 if (q_cur == 1 || q_cur == 2) {
 					if (q_cur == 1){ //新增
 						q_func('qtxt.query.VccToOrde_RB', 'vcc_rb2.txt,VccToOrde_RB,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';1;' + encodeURI(r_name));
+					}else if (q_cur == 2 ){
+						q_func('qtxt.query.VccToOrde_RB', 'vcc_rb2.txt,VccToOrde_RB,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';2;' + encodeURI(r_name));
 					}
                     var s2 = xmlString.split(';');
                     abbm[q_recno]['accno'] = s2[0];
