@@ -938,9 +938,6 @@
 					if (q_cur == 1){ //新增
 						q_func('qtxt.query.VccToOrde_RB', 'vcc_rb2.txt,VccToOrde_RB,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';1;' + encodeURI(r_name));
 					}
-					if (q_cur == 2){ //修改
-						q_func('qtxt.query.VccToOrde_RB', 'vcc_rb2.txt,VccToOrde_RB,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';2;' + encodeURI(r_name));
-					}
                     var s2 = xmlString.split(';');
                     abbm[q_recno]['accno'] = s2[0];
                     

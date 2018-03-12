@@ -61,18 +61,3 @@ if(@condition="1")
 
 	
 --修改訂單
-if(@condition="2")
-	begin
-	
-		--更新訂單表身資料
-		set @cmd="update ordes"+@accy+" set odate=datea,custno=custno,datea=datea,productno=productno,product=product,unit=spec,
-											mount=mount,price=price,total=total,c1='0',notv=mount,enda='1' from vccs"+@accy+" where noa='"+@Onoa+"' and no2=noq"
-		EXECUTE sp_executesql @cmd
-		
-		--更新訂單表頭資料
-		set @cmd="update orde"+@accy+" set odate=datea,mon=mon,tel=tel,datea=datea,postname=storeno,conform=store,money=money,
-										   tax=tax,taxtype=taxtype,total=total,worker2='"+@worker+"' from vcc"+@accy+" where vccno='"+@tnoa+"'"
-		EXECUTE sp_executesql @cmd
-		
-	end
-;
