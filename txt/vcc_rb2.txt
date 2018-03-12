@@ -78,4 +78,3 @@ if(@condition="2")
 				  from vccs"+@accy+" where noa='"+@tnoa+"'"
 		EXECUTE sp_executesql @cmd
 		
-
