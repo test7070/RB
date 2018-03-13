@@ -59,18 +59,26 @@ if(@condition="1")
 		----EXECUTE sp_executesql @cmd
 	end
 
+	
 --修改訂單
 if(@condition="2")
 	begin
+
 		--更新訂單表身資料
-		set @cmd="update ordes"+@accy+" set odate=datea,custno=custno,datea=datea,productno=productno,product=product,unit=spec,
-											mount=mount,price=price,total=total,c1='0',notv=mount,enda='1' from vccs"+@accy+" where noa='"+@Onoa+"' and no2=noq"
+		set @cmd="update a set 
+			odate=b.datea,custno=b.custno,datea=b.datea,productno=b.productno,product=b.product,unit=b.spec,
+			mount=b.mount,price=b.price,total=b.total,c1='0',notv=b.mount,enda='1'
+		from ordes"+@accy+" a outer apply view_vccs b where a.noa='"+@Onoa+"' and a.no2=noq"
 		EXECUTE sp_executesql @cmd
 		
 		--更新訂單表頭資料
-		set @cmd="update orde"+@accy+" set odate=datea,mon=mon,tel=tel,datea=datea,postname=storeno,conform=store,money=money,
-										   tax=tax,taxtype=taxtype,total=total,worker2='"+@worker+"' from vcc"+@accy+" where vccno='"+@tnoa+"'"
+		set @cmd="update a set 
+			odate=b.datea,mon=b.mon,tel=b.tel,datea=b.datea,postname=b.storeno,conform=b.store,money=b.money,
+							tax=b.tax,taxtype=b.taxtype,total=b.total,worker2='"+@worker+"'
+		from orde"+@accy+" a outer apply view_vcc b where a.vccno='"+@tnoa+"'"
 		EXECUTE sp_executesql @cmd
-
+		
 	end
 ;
+
+

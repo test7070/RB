@@ -935,7 +935,8 @@
                 if (q_cur == 1 || q_cur == 2) {
 					if (q_cur == 1){ //新增
 						q_func('qtxt.query.VccToOrde_RB', 'vcc_rb2.txt,VccToOrde_RB,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';1;' + encodeURI(r_name));
-					}else if (q_cur == 2 ){
+					}
+					if (q_cur == 2 ){
 						q_func('qtxt.query.VccToOrde_RB', 'vcc_rb2.txt,VccToOrde_RB,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';2;' + encodeURI(r_name));
 					}
                     var s2 = xmlString.split(';');
