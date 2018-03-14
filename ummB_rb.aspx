@@ -254,6 +254,14 @@
                         if (as[0] != undefined) {
                             abbm[q_recno]['bkvccno'] = as[0].bkvccno;
                             $('#txtBkvccno').val(as[0].bkvccno);
+                            
+                            var t_date=$('#txtBkdate').val();
+                            var t_vccno=as[0].bkvccno;
+                            if(t_vccno.length>0 && t_date.length>0){
+                            	q_func('vcc_post.post', t_date.substr(0,r_len) + ',' + t_vccno + ',0');
+                            	sleep(100);
+                            	q_func('vcc_post.post', t_date.substr(0,r_len) + ',' + t_vccno + ',1');
+                            }
                         }
                         break;
                     case 'btnDele':
@@ -761,6 +769,15 @@
                             $('#txtSalemoney_' + i).css('color', 'green').css('background', 'RGB(237,237,237)').attr('readonly', 'readonly');
                             $('#txtMemo_' + i).css('color', 'green').css('background', 'RGB(237,237,237)').attr('readonly', 'readonly');
                         }
+                    }
+                }
+            }
+            
+            function sleep(milliseconds) {
+                var start = new Date().getTime();
+                for (var i = 0; i < 1e7; i++) {
+                    if ((new Date().getTime() - start) > milliseconds) {
+                        break;
                     }
                 }
             }
