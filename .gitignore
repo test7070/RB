@@ -1,6 +1,9 @@
 *.class
 *.pyc
 *.pyo
+<<<<<<< HEAD
+=======
 *.project
 .git
 git
+>>>>>>> 89a578ad63fbf83e8ca9a67e1e78d81f67c36a14

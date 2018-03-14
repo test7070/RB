@@ -1,0 +1,84 @@
+﻿VccToOrde_RB: ---彩虹現場銷售自動轉訂單 Vcc to Orde  經理更新
+SET QUOTED_IDENTIFIER OFF
+declare @accy nvarchar(50) = [1] --年度
+declare @tnoa nvarchar(50) = [2] --出貨單號
+declare @condition nvarchar(20) = [3] --動作 0=刪除, 1=新增 ,2=修改
+declare @worker nvarchar(20)= [4] --當前使用者
+--declare @project nvarchar(20)= [4] --客戶專案
+ 
+declare @datec nvarchar(100) = (select (CONVERT(VARCHAR(10) , GETDATE(), 111 ))) --今天日期
+declare @timec nvarchar(100) = (SELECT left(CONVERT(nvarchar,getdate(),108),5))  --現在時間
+declare @n_ordeno nvarchar(50) = (select MAX(noa) from view_orde where noa like 'E'+REPLACE(@datec,'/','')+'%') --取得當天最後一個訂單編號
+declare @ordeno nvarchar(100) = ('E'+REPLACE(@datec,'/','')+right('000'+cast(cast(RIGHT(isnull(@n_ordeno,'000'),3) as int)+1 as nvarchar(10)),3)) --新的訂單編號(後面號碼+1)
+declare @Onoa nvarchar(100) = (select noa from view_orde where accy=@accy and vccno=@tnoa )
+declare @cmd nvarchar(max)
+
+--刪除訂單
+if(@condition="0")
+	begin
+		--表身資料
+		set @cmd="delete ordes"+@accy+" where noa='"+@Onoa+"'"
+		EXECUTE sp_executesql @cmd
+		
+		--表頭資料
+		set @cmd="delete orde"+@accy+" where vccno='"+@tnoa+"'"
+		EXECUTE sp_executesql @cmd
+		
+		------寫入drun 記錄
+		----set @cmd="insert drun(datea,timea,usera,action,noa,tablea,accno,title,memo)values(
+		----		  '"+@datec+"','"+@timec+"','"+@worker+"','Delete',@ordenoa,'orde','','出/退貨單作業',
+		----		  '出貨刪除同時自動刪除訂單，出貨單號['"+@tnoa+"']，訂單編號['"+@ordeno+"']。刪除者'+'"+@worker+"'+'。')"
+		----EXECUTE sp_executesql @cmd
+	end
+
+--新增訂單(出)
+if(@condition="1")
+	begin
+		--更新出貨單的訂單欄位
+		set @cmd="update vcc"+@accy+" set ordeno='"+@ordeno+"' where noa='"+@tnoa+"'"
+		EXECUTE sp_executesql @cmd
+		
+		--訂單表頭資料		--將vcc的內容轉至orde
+		set @cmd="insert orde"+@accy+" (odate,mon,stype,noa,cno,acomp,vccno,custno,comp,tel,salesno,sales,datea,postname,conform,
+										money,tax,taxtype,total,worker,enda,isproj,memo,paytype,kind,nick)
+				  select datea,mon,'現場銷售','"+@ordeno+"',cno,acomp,noa,custno,comp,tel,salesno,sales,datea,storeno,store,
+						money,tax,taxtype,total,worker,'1','1','由現場銷售轉來。',paytype,'隨貨單張',nick
+				  from view_vcc where noa='"+@tnoa+"'"
+		EXECUTE sp_executesql @cmd
+			
+		--訂單表身資料
+		set @cmd="insert ordes"+@accy+" (noa,no2,datea,odate,custno,productno,product,unit,mount,price,total,c1,notv,enda)
+				  select '"+@ordeno+"' noa,noq no2,datea,datea,custno,productno,product,spec,mount,price,total,'0',mount,'1'
+				  from vccs"+@accy+" where noa='"+@tnoa+"'"
+		EXECUTE sp_executesql @cmd
+		
+		------寫入drun 記錄
+		----set @cmd="insert drun(datea,timea,usera,action,noa,tablea,accno,title,memo)values(
+		----		  '"+@datec+"','"+@timec+"','"+@worker+"','Insert','"+@ordenoa+"','orde','','現場銷售作業',
+		----		  '由現場銷售作業自動產生訂單，現場銷售單號['"+@tnoa+"']，訂單編號['"+@ordeno+"']。操作者'+'"+@worker+"'+'。')"
+		----EXECUTE sp_executesql @cmd
+	end
+
+	
+--修改訂單
+if(@condition="2")
+	begin
+
+		--更新訂單表身資料
+		set @cmd="update a set 
+			odate=b.datea,custno=b.custno,datea=b.datea,productno=b.productno,product=b.product,unit=b.spec,
+			mount=b.mount,price=b.price,total=b.total,c1='0',notv=b.mount,enda='1'
+		from ordes"+@accy+" a outer apply view_vccs b where a.noa='"+@Onoa+"' and a.no2=noq"
+		EXECUTE sp_executesql @cmd
+		
+		--更新訂單表頭資料
+		set @cmd="update a set 
+			odate=b.datea,mon=b.mon,tel=b.tel,datea=b.datea,postname=b.storeno,conform=b.store,money=b.money,
+							tax=b.tax,taxtype=b.taxtype,total=b.total,worker2='"+@worker+"'
+		from orde"+@accy+" a outer apply view_vcc b where a.vccno='"+@tnoa+"'"
+		EXECUTE sp_executesql @cmd
+		
+	end
+;
+
+
