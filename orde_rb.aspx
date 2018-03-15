@@ -206,6 +206,10 @@
 					x_ordevccumm=false;
 					check_stkucc=false;
 					//檢查是否已轉出貨
+					Lock(1, {
+						opacity : 0
+					});
+					tmp_ordeno=$('#txtNoa').val();
 					if(!emp($('#txtVccno').val())){ //由訂單轉出貨單 直接更新出貨單
 						//檢查是否自動產生發票
 						var t_where = "where=^^ charindex(noa,'"+$('#txtVccno').val()+"')>0 ^^";
@@ -429,6 +433,7 @@
 						break;
 					case 'delecheckVcchasvcca':
 						var as = _q_appendData("view_vcc", "", true);
+						tmp_ordeno=$('#txtNoa').val();
 						if (as[0] != undefined) {
 							if(as[0].isgenvcca=="true")
 								alert('出貨單【自動產生發票】禁止刪除訂單!!');
@@ -437,16 +442,16 @@
 									return;
 								q_cur = 3;
 								//刪除出貨單
-								q_func('vcc_post.post.a2', r_accy + ',' + $('#txtVccno').val() + ',0');
-								//刪除產生的發票								
-								q_func('qtxt.query.vcca2', 'orde.txt,orde_vcca,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';0;' + encodeURI('RB'));
+								q_func('vcc_post.post.a2', r_accy + ',' + as[0].noa + ',0');
+								//刪除產生的發票
+								q_func('qtxt.query.vcca2', 'orde.txt,orde_vcca,' + encodeURI(r_accy) + ';' + encodeURI(tmp_ordeno)+ ';0;' + encodeURI('RB'));
 							}
 						}else{
 							if (!confirm('出貨單已遺失!!'+mess_dele))
 								return;
 							q_cur = 3;
 							//刪除產生的發票								
-							q_func('qtxt.query.vcca2', 'orde.txt,orde_vcca,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';0;' + encodeURI('RB'));
+							q_func('qtxt.query.vcca2', 'orde.txt,orde_vcca,' + encodeURI(r_accy) + ';' + encodeURI(tmp_ordeno)+ ';0;' + encodeURI('RB'));
 						}
 						Unlock(1);
 						break;
@@ -456,10 +461,10 @@
 							if(as[0].isgenvcca=="true")
 								alert('出貨單【自動產生發票】，不更新出貨單!!');
 							else
-								q_func('vcc_post.post.a1', r_accy + ',' + $('#txtVccno').val() + ',0');
+								q_func('vcc_post.post.a1', r_accy + ',' + as[0].noa + ',0');
 						}else{
 							alert('出貨單遺失，重新產生出貨單!!');
-							q_func('qtxt.query.post1', 'orde.txt,post,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';1;' + encodeURI('RB'));
+							q_func('qtxt.query.post1', 'orde.txt,post,' + encodeURI(r_accy) + ';' + encodeURI(tmp_ordeno)+ ';1;' + encodeURI('RB'));
 						}
 						break;
 					case 'checkordetoVcc':
@@ -468,7 +473,7 @@
 							alert('訂單已轉出貨單【'+as[0].noa+'】，禁止轉出貨!!');
 						}else{
 							if(emp($('#txtVccno').val())){
-								q_func('qtxt.query.post1', 'orde.txt,post,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';1;' + encodeURI('RB'));
+								q_func('qtxt.query.post1', 'orde.txt,post,' + encodeURI(r_accy) + ';' + encodeURI(tmp_ordeno)+ ';1;' + encodeURI('RB'));
 							}else{
 								q_func('vcc_post.post.a1', r_accy + ',' + $('#txtVccno').val() + ',0');
 							}
@@ -921,6 +926,7 @@
 				}
 				
 				if($('#cmbKind').val()!='作廢' && dec($('#txtMoney').val())>0){ //更新發票 104/10/16 金額大於0 才產生發票
+					tmp_ordeno=$('#txtNoa').val();
 					q_func('qtxt.query.vcca0', 'orde.txt,orde_vcca,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';0;' + encodeURI('RB'));
 				}else{
 					Unlock();
@@ -930,10 +936,11 @@
 				}
 			}
 			
+			var tmp_ordeno='';//存檔後避免網頁翻頁速度過快,導致post讀取訂單號有問題
 			function q_funcPost(t_func, result) {
                 switch(t_func) {
                 	case 'qtxt.query.vcca0':
-                		q_func('qtxt.query.vcca1', 'orde.txt,orde_vcca,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';1;' + encodeURI('RB'));
+                		q_func('qtxt.query.vcca1', 'orde.txt,orde_vcca,' + encodeURI(r_accy) + ';' + encodeURI(tmp_ordeno)+ ';1;' + encodeURI('RB'));
                 		break;
                 	case 'qtxt.query.vcca1':
                 		var as = _q_appendData("tmp0", "", true, true);
@@ -950,32 +957,33 @@
 						//location.href=location.href;
                 		break;
                 	case 'vcc_post.post.a1':
-                		q_func('qtxt.query.post0', 'orde.txt,post,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';0;' + encodeURI('RB'));
+                		q_func('qtxt.query.post0', 'orde.txt,post,' + encodeURI(r_accy) + ';' + encodeURI(tmp_ordeno)+ ';0;' + encodeURI('RB'));
                 		break;
                 	case 'vcc_post.post.a2':
-                		q_func('qtxt.query.post2', 'orde.txt,post,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';0;' + encodeURI('RB'));
+                		q_func('qtxt.query.post2', 'orde.txt,post,' + encodeURI(r_accy) + ';' + encodeURI(tmp_ordeno)+ ';0;' + encodeURI('RB'));
                 		break;
                     case 'qtxt.query.post0':
-                        q_func('qtxt.query.post1', 'orde.txt,post,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';1;' + encodeURI('RB'));
+                        q_func('qtxt.query.post1', 'orde.txt,post,' + encodeURI(r_accy) + ';' + encodeURI(tmp_ordeno)+ ';1;' + encodeURI('RB'));
                         break;
 					case 'qtxt.query.post1':
 						var as = _q_appendData("tmp0", "", true, true);
 						var t_invono='';
-							if (as[0] != undefined) {
+						if (as[0] != undefined) {
+							if($('#txtNoa').val()==tmp_ordeno){
 								abbm[q_recno]['vccno'] = as[0].vccno;
 								$('#txtVccno').val(as[0].vccno);
-								
-				                $('#vtvccno_'+(q_recno%brwCount)).text("V");
-								//vcc.post內容
-								if(!emp($('#txtVccno').val())){
-									q_func('vcc_post.post', r_accy + ',' + $('#txtVccno').val() + ',1');
-								}
-								
+								$('#vtvccno_'+(q_recno%brwCount)).text("V");
 							}
-							if(q_cur==2 && !emp($('#txtVccno').val()))
-                        		alert('已更新出貨單!!');
-                        	else
-                        		alert('成功轉出出貨單!!');
+							//vcc.post內容
+							if(!emp(as[0].vccno)){
+								q_func('vcc_post.post', r_accy + ',' + as[0].vccno + ',1');
+							}								
+						}
+						Unlock(1);
+						if(q_cur==2 && !emp($('#txtVccno').val()))
+                       		alert('已更新出貨單!!');
+                       	else
+                       		alert('成功轉出出貨單!!');
                         break;
 					case 'qtxt.query.post2':
 						_btnOk($('#txtNoa').val(), bbmKey[0],'', '', 3)
@@ -1630,13 +1638,13 @@
 						<td> </td>
 					</tr>
 					<tr class="tr1">
-						<td><span> </span><a id='lblOdate' class="lbl"></a></td>
+						<td><span> </span><a id='lblOdate' class="lbl"> </a></td>
 						<td><input id="txtOdate" type="text" class="txt c1"/></td>
 						<td><input id="txtMon" type="text" class="txt c1"/></td>
-						<td><span> </span><a id='lblStype' class="lbl"></a></td>
+						<td><span> </span><a id='lblStype' class="lbl"> </a></td>
 						<td><select id="cmbStype" class="txt c1"> </select></td>
-						<td></td>
-						<td><span></span><a id='lblNoa' class="lbl"></a></td>
+						<td> </td>
+						<td><span> </span><a id='lblNoa' class="lbl"> </a></td>
 						<td colspan="2"><input id="txtNoa" type="text" class="txt c1"/></td>
 					</tr>
 					<tr class="tr2">
