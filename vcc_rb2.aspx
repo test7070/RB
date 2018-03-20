@@ -92,6 +92,7 @@
                 $('#lblProduct').text('產品名稱');
                 $('#lblStoreno').text('倉庫編號');
                 $('#lblStore1').text('倉庫名稱');
+                $('#lblNo4').text('學習護照號碼');
                 $('#lblStoremount').text('倉庫數量');
                 //限制帳款月份的輸入 只有在備註的第一個字為*才能手動輸入
 				$('#txtMemo').change(function(){
@@ -1344,24 +1345,14 @@
 									</td>
                                 </tr>
                                 <tr>
-                                    <td width="115px" height="1px"> </td>
-                                    <td width="200px"> </td>
-                                    <td width="150px"> </td>
-                                    <td width="100px"> </td>
-                                    <td width="100px"> </td>
-                                    <td width="80px"> </td>
-                                    <td width="70px"> </td>
-                                    <td width="70px"> </td>
-                                </tr>
-                                <tr>
-                                    <td><span> </span><a id="lblNoa" class="lbl"> </a></td>
-                                    <td><input id="txtNoa" type="text" class="txt c1" /></td>
-                                    <td><span> </span><a id="lblDatea" class="lbl"> </a></td>
-                                    <td><input id="txtDatea" type="text" class="txt c1" style="width: 80px;float: left;"/></td>
-                                    <td><span> </span><a id="lblMon" class="lbl"> </a></td>
-                                    <td><input id="txtMon" type="text" class="txt c1" style="width: 75px;float: left;"/></td>
-                                    <td><span> </span><a id="lblType" class="lbl"> </a></td>
-                                    <td><select id="cmbTypea"> </select></td>
+                                    <td width="115px"><span> </span><a id="lblNoa" class="lbl"> </a></td>
+                                    <td width="200px"><input id="txtNoa" type="text" class="txt c1" /></td>
+                                    <td width="150px"><span> </span><a id="lblDatea" class="lbl"> </a></td>
+                                    <td width="100px"><input id="txtDatea" type="text" class="txt c1" style="width: 80px;float: left;"/></td>
+                                    <td width="100px"><span> </span><a id="lblMon" class="lbl"> </a></td>
+                                    <td width="80px"><input id="txtMon" type="text" class="txt c1" style="width: 75px;float: left;"/></td>
+                                    <td width="70px"><span> </span><a id="lblType" class="lbl"> </a></td>
+                                    <td width="70px"><select id="cmbTypea"> </select></td>
                                 </tr>
                                 <tr>
                                     <td><span> </span><a id="lblAcomp" class="lbl btn"> </a></td>
@@ -1376,6 +1367,15 @@
                                         <input id="txtNick" type="text" class="txt c1" style="width:35%;" placeholder="客戶簡稱"/>
                                     </td>
                                     <td colspan="2"><input id="txtTel" type="text" class="txt c1" placeholder="客戶電話"/></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><span> </span><a id="lblNo4" class="lbl"> </a></td>
+                                    <td><input id="" type="text" class="txt c1" maxlength="8" /></td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
                                 </tr>
                                 <tr>
                                     <td><span> </span><a id="lblSales" class="lbl btn"> </a></td>
