@@ -92,7 +92,7 @@
                 $('#lblProduct').text('產品名稱');
                 $('#lblStoreno').text('倉庫編號');
                 $('#lblStore1').text('倉庫名稱');
-                $('#lblNo4').text('學習護照號碼');
+                $('#lblNoa2').text('學習護照號碼');
                 $('#lblStoremount').text('倉庫數量');
                 //限制帳款月份的輸入 只有在備註的第一個字為*才能手動輸入
 				$('#txtMemo').change(function(){
@@ -1369,8 +1369,8 @@
                                     <td colspan="2"><input id="txtTel" type="text" class="txt c1" placeholder="客戶電話"/></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><span> </span><a id="lblNo4" class="lbl"> </a></td>
-                                    <td><input id="" type="text" class="txt c1" maxlength="8" /></td>
+                                    <td colspan="2"><span> </span><a id="lblNoa2" class="lbl"> </a></td>
+                                    <td><input id="txtNoa2" type="text" class="txt c1" maxlength="8" /></td>
                                     <td> </td>
                                     <td> </td>
                                     <td> </td>
