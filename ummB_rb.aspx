@@ -263,6 +263,7 @@
                             	q_func('vcc_post.post', t_date.substr(0,r_len) + ',' + t_vccno + ',1');
                             }
                         }
+                        Unlock(1);
                         break;
                     case 'btnDele':
                         var as = _q_appendData("umms", "", true);
@@ -703,6 +704,9 @@
             function q_stPost() {
                 if (!(q_cur == 1 || q_cur == 2))
                     return false;
+				Lock(1, {
+                	opacity : 0
+				});
                 var t_where = " where=^^ noa='" + $('#txtNoa').val() + "' ^^";
                 q_gt('ummb', t_where, 0, 0, 0, 'stpostBkvccno', r_accy);
             }
