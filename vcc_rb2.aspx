@@ -92,6 +92,7 @@
                 $('#lblProduct').text('產品名稱');
                 $('#lblStoreno').text('倉庫編號');
                 $('#lblStore1').text('倉庫名稱');
+                $('#lblNoa2').text('學習護照號碼');
                 $('#lblStoremount').text('倉庫數量');
                 //限制帳款月份的輸入 只有在備註的第一個字為*才能手動輸入
 				$('#txtMemo').change(function(){
@@ -1293,17 +1294,17 @@
         <div id="div_stk" style="position:absolute; top:300px; left:400px; display:none; width:400px; background-color: #CDFFCE; border: 5px solid gray;">
             <table id="table_stk" style="width:100%;" border="1" cellpadding='2' cellspacing='0'>
                 <tr>
-                    <td style="background-color: #f8d463;" align="center"><span> </span><a id="lblProductno"></a></td>
+                    <td style="background-color: #f8d463;" align="center"><span> </span><a id="lblProductno"> </a></td>
                     <td style="background-color: #f8d463;" colspan="2" id='stk_productno'> </td>
                 </tr>
                 <tr>
-                    <td style="background-color: #f8d463;" align="center"><span> </span><a id="lblProduct"></a></td>
+                    <td style="background-color: #f8d463;" align="center"><span> </span><a id="lblProduct"> </a></td>
                     <td style="background-color: #f8d463;" colspan="2" id='stk_product'> </td>
                 </tr>
                 <tr id='stk_top'>
-                    <td align="center" style="width: 30%;"><span> </span><a id="lblStoreno"></a></td>
-                    <td align="center" style="width: 45%;"><span> </span><a id="lblStore1"></a></td>
-                    <td align="center" style="width: 25%;"><span> </span><a id="lblStoremount"></a></td>
+                    <td align="center" style="width: 30%;"><span> </span><a id="lblStoreno"> </a></td>
+                    <td align="center" style="width: 45%;"><span> </span><a id="lblStore1"> </a></td>
+                    <td align="center" style="width: 25%;"><span> </span><a id="lblStoremount"> </a></td>
                 </tr>
                 <tr id='stk_close'>
                     <td align="center" colspan='3'>
@@ -1338,30 +1339,20 @@
                             <table border="0" style="height: 100%;">
                                 <tr>
                                     <td colspan="10">
-										<span></span><font size="6"><b><a id="lblFromname"></b></font>
+										<span> </span><font size="6"><b><a id="lblFromname"> </a></b></font>
 										<!---<input style="float: right;" class="btn" id="btnvcctype" onClick="btnvcctype()" type="button" value='退貨' />--->
 										<hr>
 									</td>
                                 </tr>
                                 <tr>
-                                    <td width="115px" height="1px"></td>
-                                    <td width="200px"></td>
-                                    <td width="150px"></td>
-                                    <td width="100px"></td>
-                                    <td width="100px"></td>
-                                    <td width="80px"></td>
-                                    <td width="70px"></td>
-                                    <td width="70px"></td>
-                                </tr>
-                                <tr>
-                                    <td><span> </span><a id="lblNoa" class="lbl"> </a></td>
-                                    <td><input id="txtNoa" type="text" class="txt c1" /></td>
-                                    <td><span> </span><a id="lblDatea" class="lbl"> </a></td>
-                                    <td><input id="txtDatea" type="text" class="txt c1" style="width: 80px;float: left;"/></td>
-                                    <td><span> </span><a id="lblMon" class="lbl"> </a></td>
-                                    <td><input id="txtMon" type="text" class="txt c1" style="width: 75px;float: left;"/></td>
-                                    <td><span> </span><a id="lblType" class="lbl"> </a></td>
-                                    <td><select id="cmbTypea"> </select></td>
+                                    <td width="115px"><span> </span><a id="lblNoa" class="lbl"> </a></td>
+                                    <td width="200px"><input id="txtNoa" type="text" class="txt c1" /></td>
+                                    <td width="150px"><span> </span><a id="lblDatea" class="lbl"> </a></td>
+                                    <td width="100px"><input id="txtDatea" type="text" class="txt c1" style="width: 80px;float: left;"/></td>
+                                    <td width="100px"><span> </span><a id="lblMon" class="lbl"> </a></td>
+                                    <td width="80px"><input id="txtMon" type="text" class="txt c1" style="width: 75px;float: left;"/></td>
+                                    <td width="70px"><span> </span><a id="lblType" class="lbl"> </a></td>
+                                    <td width="70px"><select id="cmbTypea"> </select></td>
                                 </tr>
                                 <tr>
                                     <td><span> </span><a id="lblAcomp" class="lbl btn"> </a></td>
@@ -1376,6 +1367,15 @@
                                         <input id="txtNick" type="text" class="txt c1" style="width:35%;" placeholder="客戶簡稱"/>
                                     </td>
                                     <td colspan="2"><input id="txtTel" type="text" class="txt c1" placeholder="客戶電話"/></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"><span> </span><a id="lblNoa2" class="lbl"> </a></td>
+                                    <td><input id="txtNoa2" type="text" class="txt c1" maxlength="8" /></td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
+                                    <td> </td>
                                 </tr>
                                 <tr>
                                     <td><span> </span><a id="lblSales" class="lbl btn"> </a></td>
@@ -1393,9 +1393,9 @@
                                     <td colspan="7"><textarea id="txtMemo" cols="10" rows="5" style="width:99%;height:50px;"> </textarea></td>
                                 </tr>
                                 <tr>
-                                    <td><span> </span><a id="lblOrdeno" class="lbl"></a></td>
+                                    <td><span> </span><a id="lblOrdeno" class="lbl"> </a></td>
                                     <td><input id="txtOrdeno" type="text" class="txt c1" placeholder="AUTO" /></td>
-                                    <td><span> </span><a id="lblWorker" class="lbl"></a></td>
+                                    <td><span> </span><a id="lblWorker" class="lbl"> </a></td>
                                     <td><input id="txtWorker" type="text" class="txt c1" /></td>
                                     <td><input id="txtWorker2" type="text" class="txt c1" /></td>
                                     <td>　</td>
@@ -1408,7 +1408,7 @@
                             <table border="0">
                                 <tr>
 									<td>　　　　　　　</td>
-									<td></td>
+									<td> </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
@@ -1449,9 +1449,9 @@
                                     <td><input id="txtTotal" type="text" class="txt num c1 istax" style="width:50%;"/></td>
                                 </tr>
                                 <tr>
-                                    <td><a class="lbl" id="lblType1"></a></td>
+                                    <td><a class="lbl" id="lblType1"> </a></td>
                                     <td><input id="txtZipname" type="text" class="txt c1" style="width:30%;"/>
-										<select id="cmbStatus" style="width: 12%;" onchange="combStatus_chg();"></select>
+										<select id="cmbStatus" style="width: 12%;" onchange="combStatus_chg();"> </select>
 									</td>
                                 </tr>
                             </table>
