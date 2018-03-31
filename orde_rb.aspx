@@ -212,7 +212,7 @@
 					tmp_ordeno=$('#txtNoa').val();
 					if(!emp($('#txtVccno').val())){ //由訂單轉出貨單 直接更新出貨單
 						//檢查是否自動產生發票
-						var t_where = "where=^^ charindex(noa,'"+$('#txtVccno').val()+"')>0 ^^";
+						var t_where = "where=^^ charindex('"+$('#txtVccno').val()+"',noa)>0 ^^";
 						q_gt('view_vcc', t_where, 0, 0, 0, "checkVcchasvcca");
 					}else{
 						var t_where = "where=^^ charindex('"+$('#txtNoa').val()+"',ordeno)>0 ^^";
@@ -741,7 +741,7 @@
 							q_func('qtxt.query.vcca3', 'orde.txt,orde_vcca,' + encodeURI(r_accy) + ';' + encodeURI($('#txtNoa').val())+ ';0;' + encodeURI('RB')); //刪除產生的發票
 							Unlock(1);
 						}else{//判斷是否有自動產生發票
-							var t_where = "where=^^ charindex(noa,'"+$('#txtVccno').val()+"')>0 ^^";
+							var t_where = "where=^^ charindex('"+$('#txtVccno').val()+"',noa)>0 ^^";
 							q_gt('view_vcc', t_where, 0, 0, 0, "delecheckVcchasvcca");
 						}
 						break;
