@@ -216,7 +216,7 @@
                                 }
                             }
                             
-                            ret = q_gridAddRow(bbsHtm, 'tbbs', 'txtProductno,txtProduct,txtSpec,txtSize,txtDime,txtWidth,txtLengthb,txtNo2,txtPrice,txtMount,txtMemo', b_ret.length, b_ret, 'productno,product,spec,size,dime,width,lengthb,unit,noa,no2,price,notv,memo', 'txtProductno,txtProduct,txtSpec,txtpriec');
+                            ret = q_gridAddRow(bbsHtm, 'tbbs', 'txtProductno,txtProduct,txtSpec,txtSize,txtDime,txtWidth,txtLengthb,txtNo2,txtPrice,txtMount', b_ret.length, b_ret, 'productno,product,spec,size,dime,width,lengthb,unit,noa,no2,price,notv', 'txtProductno,txtProduct,txtSpec,txtpriec');
                             sum();
                         }
                         break;
@@ -469,7 +469,7 @@
                                 j--;
                             }
                         }
-                        q_gridAddRow(bbsHtm, 'tbbs', 'txtProductno,txtProduct,txtSpec,txtSize,txtDime,txtWidth,txtLengthb,txtNo2,txtPrice,txtMount,txtMemo', ass.length, ass, 'productno,product,spec,size,dime,width,lengthb,unit,noa,no2,price,notv,memo', 'txtProductno,txtProduct,txtSpec');
+                        q_gridAddRow(bbsHtm, 'tbbs', 'txtProductno,txtProduct,txtSpec,txtSize,txtDime,txtWidth,txtLengthb,txtNo2,txtPrice,txtMount', ass.length, ass, 'productno,product,spec,size,dime,width,lengthb,unit,noa,no2,price,notv', 'txtProductno,txtProduct,txtSpec');
                         sum();
                         refreshBbm();
                         break;
@@ -1467,12 +1467,11 @@
                     <td align="center" style="width:139px"><a id='lblProductno_s'> </a></td>
                     <td align="center" style="width:350px;"><a id='lblProduct_s'> </a></td>
                     <td align="center" style="width:95px;" class="isStyle"><a id='lblStyle_s'> </a></td>
-                    <td align="center" style="width:100px;"><a id='lblMount_s'> </a></td>
                     <td align="center" style="width:100px;"><a id='lblPrice_s'> </a></td>
                     <td align="center" style="width:100px;"><a id='lblTotal_s'> </a></td>
                     <td align="center" style="display: none;"><a id='lblStore_s'> </a></td>
                     <td align="center" style="width:100px;" class="isRack"><a id='lblRackno_s'> </a></td>
-                    <td align="center" ><a id='lblMemo_s'> </a></td>
+                    <td align="center" style="width:100px;"><a id='lblMount_s'> </a></td>
                     <td align="center" style="width:40px;"><a id='lblStk_s'> </a></td>
                 </tr>
                 <tr style='background:#cad3ff;'>
@@ -1487,7 +1486,6 @@
                         <input id="txtSpec.*" type="text" class="txt c1 isSpec" />
                     </td>
                     <td class="isStyle"><input id="txtStyle.*" type="text" class="txt c1"/></td>
-                    <td><input id="txtMount.*" type="text" class="txt num c1"/></td>
                     <td><input id="txtPrice.*" type="text" class="txt num c1"/></td>
                     <td><input id="txtTotal.*" type="text" class="txt num c1"/></td>
                     <td style="display: none;">
@@ -1499,11 +1497,7 @@
                         <input class="btn"  id="btnRackno.*" type="button" value='.' style="float:left;" />
                         <input id="txtRackno.*" type="text" class="txt c1" style="width: 70%"/>
                     </td>
-                    <td>
-                        <input id="txtMemo.*" type="text" class="txt c1"/>
-                        <select id="combOrdelist.*" style="width: 10%;"> </select>
-                        <input id="txtNo2.*" type="text" class="txt" style="width:18%;"/>
-                    </td>
+                    <td><input id="txtMount.*" type="text" class="txt num c1"/></td>
                     <td align="center"><input class="btn" id="btnStk.*" type="button" value='.' style="width:1%;"/></td>
                 </tr>
             </table>
