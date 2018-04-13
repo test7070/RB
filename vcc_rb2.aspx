@@ -757,6 +757,14 @@
             function bbsAssign() {
                 for (var i = 0; i < q_bbsCount; i++) {
                     if (!$('#btnMinus_' + i).hasClass('isAssign')) {
+					
+					
+                        $('body').keydown(function(e){
+                            console.log(e.keyCode);
+                        });
+					
+						
+                        
                         $('#combOrdelist_'+i).change(function(){
                             var n = $(this).attr('id').split('_')[$(this).attr('id').split('_').length-1];
                             var thisVal = $.trim($(this).val());
