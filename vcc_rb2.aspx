@@ -9,7 +9,7 @@
         <script src="../script/qbox.js" type="text/javascript"></script>
         <script src='../script/mask.js' type="text/javascript"></script> 
         <link href="../qbox.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript">
+		<script type="text/javascript">
             this.errorHandler = null;
             function onPageError(error) {
                 alert("An error occurred:\r\n" + error.Message);
@@ -31,8 +31,6 @@
 
             aPop = new Array(
                 ['txtCustno', 'lblCust', 'cust', 'noa,comp,nick,tel,fax,zip_comp,addr_comp,trantype,custno2,cust2', 'txtCustno,txtComp,txtNick,txtTel', 'cust_b.aspx'],
-                ['txtStoreno_', 'btnStoreno_', 'store', 'noa,store', 'txtStoreno_,txtStore_', 'store_b.aspx'],
-                ['txtRackno_', 'btnRackno_', 'rack', 'noa,rack,storeno,store', 'txtRackno_', 'rack_b.aspx'],
                 ['txtCardealno', 'lblCardeal', 'cardeal', 'noa,comp', 'txtCardealno,txtCardeal', 'cardeal_b.aspx'],
                 ['txtCno', 'lblAcomp', 'acomp', 'noa,acomp', 'txtCno,txtAcomp', 'acomp_b.aspx'],
                 ['txtSalesno', 'lblSales', 'sss', 'noa,namea,partno,part', 'txtSalesno,txtSales', 'sss_b.aspx'],
@@ -62,13 +60,18 @@
                 if(!(q_cur==1 || q_cur==2)){
                     return;
                 }
-                var t1 = 0, t_unit, t_mount=0, t_mount1=1, t_weight = 0,t_money=0, t_tax = 0, t_total = 0;
+                var t1 = 0, t_sprice2 = '100', t_mount1=0, t_mount='1',t_money=0, t_tax = 0, t_total = 0;
                 for (var j = 0; j < q_bbsCount; j++) {
+					var t_sprice2 = 100 , t_mount=1;
                     t_mount = q_float('txtMount_' + j);
-                    t_weight=+q_float('txtMount_' + j);
-                    $('#txtTotal_' + j).val(round(q_mul(q_float('txtPrice_' + j), dec(t_mount)), 0));
+                    t_Price = q_float('txtPrice_' + j);
+                    t_sprice2 = q_float('txtSprice2_' + j);
+                    t_Sprice3 = t_sprice2/100;
+					t_totals = t_Price*t_mount*t_Sprice3;
+                    $('#txtTotal_' + j).val(t_totals);
 					
 					$('#txtMount_'+j).val(round(parseFloat(t_mount),2));
+					$('#txtSprice2_'+j).val(parseFloat(t_sprice2));
                     t_money = q_add(t_money, dec(q_float('txtTotal_' + j)));
                 }
                 calTax();
@@ -176,7 +179,6 @@
                     }
                 }
             }
-
 			
             function q_boxClose(s2) {
                 var ret;
@@ -445,9 +447,6 @@
                             $('#txtSales').val(as[0].sales);
                             var t_where = "where=^^ noa='"+as[0].salesno+"' ^^";
                             q_gt('sss', t_where, 0, 0, 0, "sss");
-                            //$('#txtPaytype').val(as[0].paytype);
-                            //$('#txtStoreno').val(as[0].postname);
-                            //$('#txtStore').val(as[0].conform);
                             $('#cmbTaxtype').val(as[0].taxtype);
                             $('#txtInvono').val(as[0].ordbno);
                             $('#txtInvo').val(as[0].ordbno);
@@ -1003,7 +1002,6 @@
                 var hasSpec = q_getPara('sys.isspec');
                 var isSpec = (hasSpec.toString()=='1'?$('.isSpec').show():$('.isSpec').hide());
                 var hasRackComp = q_getPara('sys.rack');
-                var isRack = (hasRackComp.toString()=='1'?$('.isRack').show():$('.isRack').hide());
                 if(returnType=='style'){
                     return (hasStyle.toString()=='1');
                 }else if(returnType=='spec'){
@@ -1300,7 +1298,7 @@
     </head>
     <body>
         <div id="div_stk" style="position:absolute; top:300px; left:400px; display:none; width:400px; background-color: #CDFFCE; border: 5px solid gray;">
-            <table id="table_stk" style="width:100%;" border="1" cellpadding='2' cellspacing='0'>
+            <table id="table_stk" style="width:100%;" border="1" cellpadding="2" cellspacing="0">
                 <tr>
                     <td style="background-color: #f8d463;" align="center"><span> </span><a id="lblProductno"> </a></td>
                     <td style="background-color: #f8d463;" colspan="2" id='stk_productno'> </td>
@@ -1369,7 +1367,7 @@
                                 </tr>
                                 <tr>
                                     <td><span> </span><a id="lblCust" class="lbl btn"> </a></td>
-                                    <td><input id="txtCustno" type="text" class="txt c1"/></td>
+                                    <td><input id="txtCustno" type="text" class="txt c1" autofocus /></td>
                                     <td colspan="4">
                                         <input id="txtComp" type="text" class="txt c1" style="width:65%;" placeholder="客戶名稱"/>
                                         <input id="txtNick" type="text" class="txt c1" style="width:35%;" placeholder="客戶簡稱"/>
@@ -1378,7 +1376,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2"><span> </span><a id="lblNoa2" class="lbl"> </a></td>
-                                    <td><input id="txtNoa2" type="text" class="txt c1" maxlength="8" /></td>
+                                    <td><input id="txteardno" type="text" class="txt c1" maxlength="8" /></td>
                                     <td> </td>
                                     <td> </td>
                                     <td> </td>
@@ -1412,6 +1410,7 @@
                                 </tr>
                             </table>
                         </td>
+						<!------------------以上為左邊視窗、以下為右邊視窗---------------------------------------------------------------------->
                         <td width="30%">
                             <table border="0">
                                 <tr>
@@ -1468,24 +1467,24 @@
                 </table>
             </div>
         </div>
+		<!------------------以下為表身---------------------------------------------------------------------->
         <div class='dbbs' style="width: 1350px;">
             <table id="tbbs" class='tbbs'>
-                <tr style='color:White; background:#003366;' >
+                <tr style="color:White;background:#003366;" >
                     <td align="center" style="width:40px;"><input class="btn"  id="btnPlus" type="button" value='＋' style="font-weight: bold;width:" /></td>
                     <td align="center" style="width:139px"><a id='lblProductno_s'> </a></td>
                     <td align="center" style="width:350px;"><a id='lblProduct_s'> </a></td>
-                    <td align="center" style="width:95px;" class="isStyle"><a id='lblStyle_s'> </a></td>
+                    <td align="center" style="width:95px;" class="isStyle"><a id="lblStyle_s"> </a></td>
                     <td align="center" style="width:100px;"><a id='lblPrice_s'> </a></td>
-                    <td align="center" style="width:100px;"><a id='lblTotal_s'> </a></td>
-                    <td align="center" style="display: none;"><a id='lblStore_s'> </a></td>
-                    <td align="center" style="width:100px;" class="isRack"><a id='lblRackno_s'> </a></td>
+                    <td align="center" style="width:50px;"><a>折％</a></td>
                     <td align="center" style="width:100px;"><a id='lblMount_s'> </a></td>
+                    <td align="center" style="width:100px;"><a id='lblTotal_s'> </a></td>
                     <td align="center" style="width:40px;"><a id='lblStk_s'> </a></td>
                 </tr>
-                <tr style='background:#cad3ff;'>
-                    <td><input class="btn"  id="btnMinus.*" type="button" value='－' style=" font-weight: bold;" /></td>
+                <tr style="background:#cad3ff;">
+                    <td><input class="btn"  id="btnMinus.*" type="button" value="－" style=" font-weight: bold;" /></td>
                     <td align="center">
-                        <input class="txt c1"  id="txtProductno.*" type="text" />
+                        <input class="txt c1" id="txtProductno.*" type="text" />
                         <input id="txtNoq.*" type="text" class="txt c6"/>
                         <input class="btn"  id="btnProductno.*" type="button" value='.' style=" font-weight: bold;" />
                     </td>
@@ -1495,17 +1494,9 @@
                     </td>
                     <td class="isStyle"><input id="txtStyle.*" type="text" class="txt c1"/></td>
                     <td><input id="txtPrice.*" type="text" class="txt num c1"/></td>
-                    <td><input id="txtTotal.*" type="text" class="txt num c1"/></td>
-                    <td style="display: none;">
-                        <input id="txtStoreno.*" type="text" class="txt c1" style="width: 75%"/>
-                        <input class="btn" id="btnStoreno.*" type="button" style=" font-weight: bold;" />
-                        <input id="txtStore.*" type="text" class="txt c1"/>
-                    </td>
-                    <td class="isRack">
-                        <input class="btn"  id="btnRackno.*" type="button" value='.' style="float:left;" />
-                        <input id="txtRackno.*" type="text" class="txt c1" style="width: 70%"/>
-                    </td>
+                    <td><input id="txtSprice2.*" type="text" class="txt num c1" /></td>
                     <td><input id="txtMount.*" type="text" class="txt num c1"/></td>
+                    <td><input id="txtTotal.*" type="text" class="txt num c1"/></td>
                     <td align="center"><input class="btn" id="btnStk.*" type="button" value='.' style="width:1%;"/></td>
                 </tr>
             </table>
