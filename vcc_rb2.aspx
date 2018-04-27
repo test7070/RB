@@ -406,6 +406,14 @@
 							$('#txtProductno_'+(dec(n)+1)).focus();  //跳到指定欄位
 						}else if (q_bbsCount==dec(n)+1){
 							document.getElementById("btnPlus").click();
+							/*function load(){
+								//下面2種方法效果是一样的  執行按鈕的程序
+								document.getElementById("target").onclick();
+								document.getElementById("target").click();
+								
+								//點按鈕
+								document.getElementById("btnPlus").click();
+							}*/
 							$('#txtProductno_'+(dec(n)+1)).focus();  //跳到指定欄位
 						}
 					}
@@ -728,6 +736,7 @@
 			
             function btnIns() {
                 _btnIns();
+				$('#txtCustno').focus();
                 $('#txtInvono').val('');
                 $('#chkIsgenvcca').prop('checked',true);
                 $('#txt' + bbmKey[0].substr(0, 1).toUpperCase() + bbmKey[0].substr(1)).val('AUTO');
@@ -735,7 +744,6 @@
                 $('#txtAcomp').val(z_acomp);
                 $('#txtDatea').val(q_date());
                 $('#cmbTypea').val('1');
-                $('#txtDatea').focus();
 				$('#txtWorker').val(r_name);
                 $('#txtPaytype').val('現金'); //預設現金 (因為現場銷售)
 				$('#txtStoreno').val('000');  //預設台北小倉
@@ -760,6 +768,7 @@
                 //105/06/07 原抓製單人部門 改成抓業務部門
                 var t_where = "where=^^ noa='"+r_partno+"' ^^";
                 q_gt('part', t_where, 0, 0, 0, "getpart");
+				
             }
 
             function btnModi() {
