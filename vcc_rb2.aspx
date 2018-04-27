@@ -406,14 +406,6 @@
 							$('#txtProductno_'+(dec(n)+1)).focus();  //跳到指定欄位
 						}else if (q_bbsCount==dec(n)+1){
 							document.getElementById("btnPlus").click();
-							/*function load(){
-								//下面2種方法效果是一样的  執行按鈕的程序
-								document.getElementById("target").onclick();
-								document.getElementById("target").click();
-								
-								//點按鈕
-								document.getElementById("btnPlus").click();
-							}*/
 							$('#txtProductno_'+(dec(n)+1)).focus();  //跳到指定欄位
 						}
 					}
