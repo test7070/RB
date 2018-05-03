@@ -1263,7 +1263,7 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2"><span> </span><a id="lblNoa2" class="lbl"> </a></td>
-                                    <td><input id="txteardno" type="text" class="txt c1" maxlength="8" /></td>
+                                    <td><input id="txteardno" type="text" class="txt c1" maxlength="8" placeholder="限8碼"/></td>
                                     <td> </td>
                                     <td> </td>
                                     <td> </td>
