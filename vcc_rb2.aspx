@@ -65,9 +65,9 @@
                 
                 q_cmbParse("cmbTypea", q_getPara('vcc.typea')); //出or退
                 q_cmbParse("combPay", ('').concat(new Array('　　　　','現金','刷卡','支付宝')));
-                q_cmbParse("cmbStatus", ('').concat(new Array('　　　　','已出貨','未出貨')));
+                q_cmbParse("cmbStatus", ('').concat(new Array('　　　　','已出貨、已收款','未出貨、已收款')));
                 q_cmbParse("cmbTaxtype", q_getPara('sys.taxtype'));
-                
+
                 var t_where = "where=^^ 1=0  ^^ stop=100";
                 q_gt('custaddr', t_where, 0, 0, 0, "");
                 $('#lblProductno').text('產品編號');
