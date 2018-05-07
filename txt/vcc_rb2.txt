@@ -1,4 +1,4 @@
-﻿VccToOrde_RB: ---彩虹現場銷售自動轉訂單 Vcc to Orde  經理更新
+﻿VccToOrde_RB: ---彩虹現場銷售自動轉訂單
 SET QUOTED_IDENTIFIER OFF
 declare @accy nvarchar(50) = [1] --年度
 declare @tnoa nvarchar(50) = [2] --出貨單號
@@ -38,18 +38,18 @@ if(@condition="1")
 		set @cmd="update vcc"+@accy+" set ordeno='"+@ordeno+"' where noa='"+@tnoa+"'"
 		EXECUTE sp_executesql @cmd
 		
+		--訂單表身資料
+		set @cmd="insert ordes"+@accy+" (noa,no2,datea,odate,custno,productno,product,unit,mount,price,total,c1,notv,enda)
+				  select '"+@ordeno+"' noa,noq no2,datea,datea,custno,productno,product,spec,mount,price,total,'0',mount,'1'
+				  from vccs"+@accy+" where noa='"+@tnoa+"'"
+		EXECUTE sp_executesql @cmd
+		
 		--訂單表頭資料		--將vcc的內容轉至orde
 		set @cmd="insert orde"+@accy+" (odate,mon,stype,noa,cno,acomp,vccno,custno,comp,tel,salesno,sales,datea,postname,conform,
 										money,tax,taxtype,total,worker,enda,isproj,memo,paytype,kind,nick)
 				  select datea,mon,'現場銷售','"+@ordeno+"',cno,acomp,noa,custno,comp,tel,salesno,sales,datea,storeno,store,
 						money,tax,taxtype,total,worker,'1','1','由現場銷售轉來。',paytype,'隨貨單張',nick
 				  from view_vcc where noa='"+@tnoa+"'"
-		EXECUTE sp_executesql @cmd
-			
-		--訂單表身資料
-		set @cmd="insert ordes"+@accy+" (noa,no2,datea,odate,custno,productno,product,unit,mount,price,total,c1,notv,enda)
-				  select '"+@ordeno+"' noa,noq no2,datea,datea,custno,productno,product,spec,mount,price,total,'0',mount,'1'
-				  from vccs"+@accy+" where noa='"+@tnoa+"'"
 		EXECUTE sp_executesql @cmd
 		
 		------寫入drun 記錄

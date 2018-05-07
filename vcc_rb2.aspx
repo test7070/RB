@@ -35,7 +35,6 @@
                 ['txtCno', 'lblAcomp', 'acomp', 'noa,acomp', 'txtCno,txtAcomp', 'acomp_b.aspx'],
                 ['txtSalesno', 'lblSales', 'sss', 'noa,namea,partno,part', 'txtSalesno,txtSales', 'sss_b.aspx'],
                 ['txtSalesno2', 'lblSales2', 'sss', 'noa,namea', 'txtSalesno2,txtSales2', 'sss_b.aspx'],
-                //['txtProductno_', 'btnProductno_', 'ucaucc', 'noa,product,spec,price', 'txtProductno_,txtProduct_,txtSpec_,txtPrice_', 'ucaucc_b.aspx'],
                 ['txtStoreno', 'lblStore', 'store', 'noa,store', 'txtStoreno,txtStore', 'store_b.aspx']
             );
 
@@ -64,8 +63,9 @@
                 bbsNum = [['txtSprice2', 12, q_getPara('vcc.sprice2Precision'), 1],['txtPrice', 12, q_getPara('vcc.pricePrecision'), 1], ['txtMount', 9, q_getPara('vcc.mountPrecision'), 1], ['txtTotal', 15, 0, 1]];
                 
                 q_cmbParse("cmbTypea", q_getPara('vcc.typea')); //出or退
-                q_cmbParse("combPay", ('').concat(new Array('　　　　','現金','刷卡','支付宝')));
-                q_cmbParse("cmbStatus", ('').concat(new Array('　　　　','已出貨、已收款','未出貨、已收款')));
+                //q_cmbParse("combPay", ('').concat(new Array('　　　　','現金','刷卡','支付宝')));
+                q_cmbParse("combPay", ('').concat(new Array('　　　　','現金')));  ///目前以現金為主
+                q_cmbParse("cmbStatus", ('').concat(new Array('　　　　　　　　','已出貨、已收款','未出貨、已收款')));
                 q_cmbParse("cmbTaxtype", q_getPara('sys.taxtype'));
 
                 var t_where = "where=^^ 1=0  ^^ stop=100";
@@ -633,8 +633,6 @@
             function bbsAssign() {
                 for (var i = 0; i < q_bbsCount; i++) {
                     if (!$('#btnMinus_' + i).hasClass('isAssign')) {
-						
-					
                         $('body').keydown(function(e){
                             console.log(e.keyCode);
                         });
@@ -679,8 +677,6 @@
                                 b_seq = t_IdSeq;
                                 if (!emp($('#txtProductno_' + b_seq).val())) {
                                     //庫存
-                                    //var t_where = "where=^^ ['" + q_date() + "','','" + $('#txtProductno_' + b_seq).val() + "')  ^^";
-                                    //q_gt('calstk', t_where, 0, 0, 0, "msg_stk", r_accy);
                                     //顯示DIV 104/03/21
                                     mouse_point=e;
                                     mouse_point.pageY=$('#txtMount_'+b_seq).offset().top;
@@ -709,7 +705,6 @@
                             t_IdSeq = -1;
                             q_bodyId($(this).attr('id'));
                             b_seq = t_IdSeq;
-                            //t_where = "cust='" + $('#txtCustno').val() + "' and noq='" + $('#txtProductno_' + b_seq).val() + "'";
                             t_where = "custno='" + $('#txtCustno').val() + "' and comp='" + $('#txtComp').val() + "' and productno='" + $('#txtProductno_' + b_seq).val() + "' and product='" + $('#txtProduct_' + b_seq).val() + "'";
                             q_box("z_vccrecord.aspx?" + r_userno + ";" + r_name + ";" + q_time + ";" + t_where, 'vccrecord', "95%", "95%", q_getMsg('lblRecord_s'));
                         });
@@ -748,7 +743,7 @@
                 $('#txtPaytype').val('現金'); //預設現金 (因為現場銷售)
 				$('#txtStoreno').val('000');  //預設台北小倉
                 $('#txtStore').val('台北小倉');  //預設台北小倉
-                $('#txtZipname').val('已出貨');  //預設已出貨 (因為現場銷售)
+                $('#txtZipname').val('已出貨、已收款');  //預設已出貨 (因為現場銷售)
 				$('#txtSalesno').val(r_userno);
 				$('#txtSales').val(r_name);
                 $('#cmbTaxtype').val(q_getPara('sys.d4taxtype'));
@@ -1344,7 +1339,7 @@
                                 </tr>
                                 <tr>
                                     <td><a class="lbl" id="lblType1"> </a></td>
-                                    <td><input id="txtZipname" type="text" class="txt c1" style="width:30%;"/>
+                                    <td><input id="txtZipname" type="text" class="txt c1" style="width:65%;"/>
 										<select id="cmbStatus" style="width: 12%;" onchange="combStatus_chg();"> </select>
 									</td>
                                 </tr>
