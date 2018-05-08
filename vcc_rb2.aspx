@@ -61,7 +61,6 @@
                 q_mask(bbmMask);
                 bbmNum = [   ['txtMoney', 15, 0, 1], ['txtTax', 15, 0, 1],['txtTotal', 15, 0, 1]];
                 bbsNum = [['txtSprice2', 12, q_getPara('vcc.sprice2Precision'), 1],['txtPrice', 12, q_getPara('vcc.pricePrecision'), 1], ['txtMount', 9, q_getPara('vcc.mountPrecision'), 1], ['txtTotal', 15, 0, 1]];
-                
                 q_cmbParse("cmbTypea", q_getPara('vcc.typea')); //出or退
                 //q_cmbParse("combPay", ('').concat(new Array('　　　　','現金','刷卡','支付宝')));
                 q_cmbParse("combPay", ('').concat(new Array('　　　　','現金')));  ///目前以現金為主
