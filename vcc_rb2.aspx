@@ -14,7 +14,7 @@
             function onPageError(error) {
                 alert("An error occurred:\r\n" + error.Message);
             }
-            q_tables = 's';
+            q_tables = "s";
             var q_name = "vcc";
             var q_readonly = ['txtNoa','txtDatea','txtComp','txtNick','txtCardeal','txtSales','txtCno','txtAcomp','txtPaytype','txtMoney','txtTax','txtTotal','txtWorker','txtWorker2','txtTranstart','txtStore','txtZipname','txtOrdeno','txtInvono'];
             var q_readonlys = ['txtTotal', 'txtNo2','txtNoq'];
@@ -762,7 +762,6 @@
                 //105/06/07 原抓製單人部門 改成抓業務部門
                 var t_where = "where=^^ noa='"+r_partno+"' ^^";
                 q_gt('part', t_where, 0, 0, 0, "getpart");
-				
             }
 
             function btnModi() {
@@ -1294,10 +1293,7 @@
 						<!------------------以上為左邊視窗、以下為右邊視窗---------------------------------------------------------------------->
                         <td width="30%">
                             <table border="0">
-                                <tr>
-									<td>　　　　　　　</td>
-									<td> </td>
-                                </tr>
+                                <tr><td>　　　　　　　</td><td> </td></tr>
                                 <tr>
                                     <td colspan="2">
 										<input id="chkIsgenvcca" type="checkbox" checked class="lbl" style="float:left;" />
